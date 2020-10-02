@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Bot Bubulle</string>
+    <string name="channel_name">Mon canal</string>
+    <string name="channel_description">Ceci est mon canal</string>
+</resources>
