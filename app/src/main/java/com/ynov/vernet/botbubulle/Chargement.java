@@ -15,8 +15,8 @@ public class Chargement extends AppCompatActivity {
         setContentView(R.layout.activity_chargement);
 
         // Jouer le son des bulles
-//        final MediaPlayer sonBulles = MediaPlayer.create(this, R.raw.bulles);
-//        sonBulles.start();
+        final MediaPlayer sonBulles = MediaPlayer.create(this, R.raw.bulles);
+        sonBulles.start();
 
         // Démarrer l'activité Biométrie au bout de 2s
         new Handler().postDelayed(new Runnable() {
