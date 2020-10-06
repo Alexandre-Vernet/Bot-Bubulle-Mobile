@@ -15,14 +15,14 @@ public class Chargement extends AppCompatActivity {
         setContentView(R.layout.activity_chargement);
 
         // Jouer le son des bulles
-//        final MediaPlayer sonBulle = MediaPlayer.create(this, R.raw.bulles);
-//        sonBulle.start();
+//        final MediaPlayer sonBulles = MediaPlayer.create(this, R.raw.bulles);
+//        sonBulles.start();
 
-        // Démarrer l'activité au bout de 2s
+        // Démarrer l'activité Biométrie au bout de 2s
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                Intent intent = new Intent(getApplicationContext(), Biometrie.class);
                 startActivity(intent);
                 finish();
             }

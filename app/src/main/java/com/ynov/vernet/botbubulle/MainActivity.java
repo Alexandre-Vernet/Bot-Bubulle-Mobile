@@ -19,38 +19,5 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        Executor executor = Executors.newSingleThreadExecutor();
-
-        // Demander l'authentification
-        BiometricPrompt biometricPrompt = new BiometricPrompt.Builder(this)
-                .setTitle("Biométrie")
-                .setDescription("Utilisez la biométrie pour vous connecter.")
-                .setNegativeButton("Annuler", executor, new DialogInterface.OnClickListener() {
-                    // Bouton annuler
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Arrêter l'application
-                        finish();
-                    }
-                }).build();
-
-        final MainActivity mainActivity = this;
-
-        biometricPrompt.authenticate(new CancellationSignal(), executor, new BiometricPrompt.AuthenticationCallback() {
-            // Lorsqu'on est connecté
-            @Override
-            public void onAuthenticationSucceeded(BiometricPrompt.AuthenticationResult result) {
-                super.onAuthenticationSucceeded(result);
-                mainActivity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        // Afficher un toast
-                        Toast.makeText(MainActivity.this, "Authentifié !", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        });
-
     }
 }
