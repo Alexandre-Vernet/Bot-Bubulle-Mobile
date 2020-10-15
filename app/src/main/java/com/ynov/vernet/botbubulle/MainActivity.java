@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -43,10 +44,12 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 // Récupérer le temps avant 22h
-                                Date date = Calendar.getInstance().getTime();
-                                tHeures = 21 - date.getHours();
-                                tMinutes = 59 - date.getMinutes();
-                                tSecondes = 59 - date.getSeconds();
+                                Date date = new Date();
+                                Calendar calendar = GregorianCalendar.getInstance();
+                                calendar.setTime(date);
+                                tHeures = 21 - calendar.get(Calendar.HOUR_OF_DAY);
+                                tMinutes = 59 - calendar.get(Calendar.MINUTE);
+                                tSecondes = 59 - calendar.get(Calendar.SECOND);
 
                                 // Afficher le temps
                                 heures.setText("" + tHeures + " h ");

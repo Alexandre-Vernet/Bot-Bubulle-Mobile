@@ -1,13 +1,13 @@
 package com.ynov.vernet.botbubulle;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.hardware.biometrics.BiometricPrompt;
 import android.os.Bundle;
 import android.os.CancellationSignal;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.concurrent.Executors;
 
