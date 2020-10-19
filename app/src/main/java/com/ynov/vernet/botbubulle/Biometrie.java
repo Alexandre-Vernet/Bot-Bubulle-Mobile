@@ -13,13 +13,15 @@ import java.util.concurrent.Executors;
 
 public class Biometrie extends AppCompatActivity {
 
+    final Biometrie biometrie = this;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_biometrie);
 
         // Demander l'authentification
-        BiometricPrompt biometricPrompt = new BiometricPrompt.Builder(this)
+        BiometricPrompt biometricPrompt = new BiometricPrompt.Builder(getApplicationContext())
                 .setTitle("Biométrie")
                 .setDescription("Utilisez la biométrie pour vous connecter.")
                 .setNegativeButton("Annuler", Executors.newSingleThreadExecutor(), new DialogInterface.OnClickListener() {
@@ -31,7 +33,6 @@ public class Biometrie extends AppCompatActivity {
                     }
                 }).build();
 
-        final Biometrie biometrie = this;
 
         biometricPrompt.authenticate(new CancellationSignal(), Executors.newSingleThreadExecutor(), new BiometricPrompt.AuthenticationCallback() {
             // Lorsqu'on est connecté
@@ -52,5 +53,6 @@ public class Biometrie extends AppCompatActivity {
                 });
             }
         });
+
     }
 }

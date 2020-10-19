@@ -2,7 +2,6 @@ package com.ynov.vernet.botbubulle;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.Service;
 import android.os.Build;
 
 import androidx.annotation.NonNull;
