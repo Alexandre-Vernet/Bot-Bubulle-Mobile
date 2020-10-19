@@ -28,7 +28,9 @@ public class Biometrie extends AppCompatActivity {
                     // Bouton annuler
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // Arrêter l'application
+                        // Passer au code au lieu de l'empreinte
+                        Intent intent = new Intent(getApplicationContext(), Code.class);
+                        startActivity(intent);
                         finish();
                     }
                 }).build();
