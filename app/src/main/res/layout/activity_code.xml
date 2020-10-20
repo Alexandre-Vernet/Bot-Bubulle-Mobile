@@ -9,7 +9,7 @@
 
     <EditText
         android:id="@+id/editTextCode"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Entrez le code"
