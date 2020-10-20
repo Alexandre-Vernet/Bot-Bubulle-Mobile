@@ -28,7 +28,7 @@ public class Biometrie extends AppCompatActivity {
                     // Bouton annuler
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // Passer au code au lieu de l'empreinte
+                        // Passer au code numérique au lieu de l'empreinte
                         Intent intent = new Intent(getApplicationContext(), Code.class);
                         startActivity(intent);
                         finish();
@@ -36,6 +36,7 @@ public class Biometrie extends AppCompatActivity {
                 }).build();
 
 
+        // Si la connexion a reussi
         biometricPrompt.authenticate(new CancellationSignal(), Executors.newSingleThreadExecutor(), new BiometricPrompt.AuthenticationCallback() {
             // Lorsqu'on est connecté
             @Override
@@ -48,13 +49,21 @@ public class Biometrie extends AppCompatActivity {
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(intent);
                         finish();
-
-                        // Afficher un toast
                         Toast.makeText(getApplicationContext(), "Authentifié !", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
-        });
 
+            // Si l'utilisateur clique ailleurs sur l'écran
+            @Override
+            public void onAuthenticationError(int errorCode, CharSequence errString) {
+                super.onAuthenticationError(errorCode, errString);
+
+                // Demander à se log par code
+                Intent intent = new Intent(getApplicationContext(), Code.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 }
