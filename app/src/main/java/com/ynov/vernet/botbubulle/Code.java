@@ -51,4 +51,15 @@ public class Code extends AppCompatActivity {
             }
         });
     }
+
+    // Bouton retour
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        // Relancer la classe Biométrie
+        Intent intent = new Intent(getApplicationContext(), Biometrie.class);
+        startActivity(intent);
+        finish();
+    }
 }
