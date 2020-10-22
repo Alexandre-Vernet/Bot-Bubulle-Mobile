@@ -3,6 +3,7 @@ package com.ynov.vernet.botbubulle;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Vibrator;
 import android.view.View;
 import android.view.WindowManager;
@@ -49,10 +50,18 @@ public class Code extends AppCompatActivity {
 
                 // Si le code est mauvais
                 else {
-                    // Vider la zone de texte
+                    // Vider la zone de texte et afficher un message d'erreur
                     editTextCode.setText("");
                     editTextCode.setError("Mot de passe incorrect");
                     editTextCode.requestFocus();
+
+                    // Masquer le message d'erreur au bout de 2s
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            editTextCode.setError(null);
+                        }
+                    }, 2000);
 
                     // Vibrer
                     vibe = (Vibrator) Code.this.getSystemService(Context.VIBRATOR_SERVICE);

@@ -24,7 +24,7 @@ public class Biometrie extends AppCompatActivity {
         BiometricPrompt biometricPrompt = new BiometricPrompt.Builder(getApplicationContext())
                 .setTitle("Biométrie")
                 .setDescription("Utilisez la biométrie pour vous connecter.")
-                .setNegativeButton("Annuler", Executors.newSingleThreadExecutor(), new DialogInterface.OnClickListener() {
+                .setNegativeButton("Se connecter grâce à un mot de passe", Executors.newSingleThreadExecutor(), new DialogInterface.OnClickListener() {
                     // Bouton annuler
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

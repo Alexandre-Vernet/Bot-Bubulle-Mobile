@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context=".Chargement">
+    tools:context=".Chargement"
+    android:background="@drawable/fond">
 
     <ImageView
         android:layout_width="375dp"

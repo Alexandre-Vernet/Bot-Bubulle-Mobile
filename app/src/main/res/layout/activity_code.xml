@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".Code">
+    tools:context=".Code"
+    android:background="@drawable/fond">
 
     <EditText
         android:id="@+id/editTextCode"
