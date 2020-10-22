@@ -1,6 +1,8 @@
 package com.ynov.vernet.botbubulle;
 
 import android.os.Bundle;
+import android.view.animation.TranslateAnimation;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,9 +21,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // Référencer les interface
-        final TextView heures = (TextView) findViewById(R.id.heures);
-        final TextView minutes = (TextView) findViewById(R.id.minutes);
-        final TextView secondes = (TextView) findViewById(R.id.secondes);
+        final TextView heures = findViewById(R.id.heures);
+        final TextView minutes = findViewById(R.id.minutes);
+        final TextView secondes = findViewById(R.id.secondes);
 
         // Démarrer un thread
         Thread thread = new Thread() {
@@ -49,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                         });
                     }
-                } catch (InterruptedException e) {
+                } catch (InterruptedException ignored) {
                 }
             }
         };

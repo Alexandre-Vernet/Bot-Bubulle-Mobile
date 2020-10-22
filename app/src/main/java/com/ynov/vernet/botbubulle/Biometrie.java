@@ -35,10 +35,8 @@ public class Biometrie extends AppCompatActivity {
                     }
                 }).build();
 
-
-        // Si la connexion a reussi
         biometricPrompt.authenticate(new CancellationSignal(), Executors.newSingleThreadExecutor(), new BiometricPrompt.AuthenticationCallback() {
-            // Lorsqu'on est connecté
+            // Si la connexion a reussi
             @Override
             public void onAuthenticationSucceeded(BiometricPrompt.AuthenticationResult result) {
                 super.onAuthenticationSucceeded(result);

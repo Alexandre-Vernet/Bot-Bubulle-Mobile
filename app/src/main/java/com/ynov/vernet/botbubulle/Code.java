@@ -67,8 +67,8 @@ public class Code extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
 
-        // Relancer la classe Biométrie
-        Intent intent = new Intent(getApplicationContext(), Biometrie.class);
+        // Lancer la classe Chargement
+        Intent intent = new Intent(getApplicationContext(), Chargement.class);
         startActivity(intent);
         finish();
     }
