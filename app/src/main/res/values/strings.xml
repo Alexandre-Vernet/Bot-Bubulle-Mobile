@@ -2,4 +2,7 @@
     <string name="app_name">Bot Bubulle</string>
     <string name="channel_name">Mon canal</string>
     <string name="channel_description">Ceci est mon canal</string>
+    <string name="icone">Icone</string>
+    <string name="bubulle">Bubulle</string>
+    <string name="temps_avant_22h">Temps avant 22h :</string>
 </resources>

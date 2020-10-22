@@ -1,8 +1,6 @@
 package com.ynov.vernet.botbubulle;
 
 import android.os.Bundle;
-import android.view.animation.TranslateAnimation;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
