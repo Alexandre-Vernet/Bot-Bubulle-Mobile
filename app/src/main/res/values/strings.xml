@@ -5,4 +5,7 @@
     <string name="icone">Icone</string>
     <string name="bubulle">Bubulle</string>
     <string name="temps_avant_22h">Temps avant 22h :</string>
+    <string name="entrez_le_code">Entrez le code</string>
+    <string name="valider">Valider</string>
+    <string name="utiliser_la_reconnaissance_biom_trique">Utiliser la reconnaissance biométrique</string>
 </resources>
