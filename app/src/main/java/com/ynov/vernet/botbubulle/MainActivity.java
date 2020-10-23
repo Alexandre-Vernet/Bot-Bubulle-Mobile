@@ -1,6 +1,8 @@
 package com.ynov.vernet.botbubulle;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +15,8 @@ public class MainActivity extends AppCompatActivity {
 
     private int tHeures, tMinutes, tSecondes;
 
+    ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
         final TextView heures = findViewById(R.id.heures);
         final TextView minutes = findViewById(R.id.minutes);
         final TextView secondes = findViewById(R.id.secondes);
+        progressBar = findViewById(R.id.progressBar);
+
 
         // Démarrer un thread
         Thread thread = new Thread() {
@@ -34,6 +40,9 @@ public class MainActivity extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                // Masquer la barre de chargement
+                                progressBar.setVisibility(View.INVISIBLE);
+
                                 // Récupérer le temps avant 22h
                                 Date date = new Date();
                                 Calendar calendar = GregorianCalendar.getInstance();
