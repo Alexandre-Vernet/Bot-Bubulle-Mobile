@@ -1,13 +1,12 @@
 package com.ynov.vernet.botbubulle;
 
+import android.app.AlarmManager;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -15,24 +14,22 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
-    private int tHeures, tMinutes, tSecondes;
     Context context;
+    private int tHeures, tMinutes, tSecondes;
     ProgressBar progressBar;
-    private static final String CHANNEL_ID = "Mon canal";
-    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        context = getApplicationContext();
 
         // Référencer les interface
         final TextView heures = findViewById(R.id.heures);
@@ -40,24 +37,22 @@ public class MainActivity extends AppCompatActivity {
         final TextView secondes = findViewById(R.id.secondes);
         progressBar = findViewById(R.id.progressBar);
 
+        // Vérifier l'heure pour l'envoie de la notification
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 19);
+        calendar.set(Calendar.MINUTE, 34);
+        calendar.set(Calendar.SECOND, 0);
 
-        // Vérifier l'heure pour l'envoie de la notif
-        Calendar now = Calendar.getInstance();
+        // Préparer la classe qui envoie la notification
+        Intent intent = new Intent(new Intent(getApplicationContext(), Notification_Reciever.class));
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 100, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        int hour = now.get(Calendar.HOUR_OF_DAY); // Get hour in 24 hour format
-        int minute = now.get(Calendar.MINUTE);
-
-        Date date = parseDate(hour + ":" + minute);
-        Date dateCompareOne = parseDate("09:56");
-        Date dateCompareTwo = parseDate("11:00");
-
-        if (dateCompareOne.before(date) && dateCompareTwo.after(date)) {
-            Log.d(TAG, "run: Dring Dring !");
-            envoyerNotification();
-        }
+        // Créer l'alarme
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
 
 
-        // Démarrer un thread
+        // Mettre à jour le temps avant la prochaine notification
         Thread thread = new Thread() {
             @Override
             public void run() {
@@ -92,62 +87,5 @@ public class MainActivity extends AppCompatActivity {
         };
 
         thread.start();
-
-    }
-
-    private Date parseDate(String date) {
-
-        final String inputFormat = "HH:mm";
-        SimpleDateFormat inputParser = new SimpleDateFormat(inputFormat, Locale.FRANCE);
-        try {
-            return inputParser.parse(date);
-        } catch (java.text.ParseException e) {
-            return new Date(0);
-        }
-    }
-
-    private void envoyerNotification() {
-
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-
-        final PendingIntent resultPendingIntent =
-                PendingIntent.getActivity(
-                        MainActivity.this,
-                        0,
-                        intent,
-                        PendingIntent.FLAG_CANCEL_CURRENT
-                );
-//
-//
-//        // Créer la notification
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setContentText("Dring Dring ⏲ !")
-                .setSmallIcon(R.drawable.icon)
-                .setLargeIcon(BitmapFactory.decodeResource(this.getResources(), R.drawable.icon))
-
-                .setColor(getResources().getColor(R.color.colorPrimary))
-//                .setVibrate(new long[]{1000, 1000, 1000, 1000, 1000})
-
-//                .setSound(Uri.parse("https://www.youtube.com/watch?v=W6YOhFCGZMM&list=WL&index=2"))
-
-
-                .setSound(Uri.parse("android.resource://com.ynov.vernet.botbubulle/" + R.raw.bulles))
-
-                .setDefaults(-1)
-
-
-                .setStyle(new NotificationCompat.BigTextStyle().bigText("Big View Styles"))
-                .setContentIntent(resultPendingIntent)
-                .addAction(R.drawable.ic_launcher_foreground, "Add", resultPendingIntent)
-
-
-                .setPriority(NotificationCompat.PRIORITY_HIGH);
-
-
-        // Envoyer la notification
-        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-
-        notificationManager.notify(1, notificationBuilder.build());
-
     }
 }
