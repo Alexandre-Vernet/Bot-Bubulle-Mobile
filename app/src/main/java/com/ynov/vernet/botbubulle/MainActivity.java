@@ -24,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
     private int tHeures, tMinutes, tSecondes;
     ProgressBar progressBar;
 
+    private static final String TAG = "MainActivity";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,14 +39,18 @@ public class MainActivity extends AppCompatActivity {
         final TextView secondes = findViewById(R.id.secondes);
         progressBar = findViewById(R.id.progressBar);
 
+        // Débug
+//        envoyerNotification();
+
+
         // Vérifier l'heure pour l'envoie de la notification
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, 19);
-        calendar.set(Calendar.MINUTE, 34);
+        calendar.set(Calendar.HOUR_OF_DAY, 21);
+        calendar.set(Calendar.MINUTE, 40);
         calendar.set(Calendar.SECOND, 0);
 
         // Préparer la classe qui envoie la notification
-        Intent intent = new Intent(new Intent(getApplicationContext(), Notification_Reciever.class));
+        Intent intent = new Intent(new Intent(getApplicationContext(), Notification.class));
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 100, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         // Créer l'alarme
@@ -87,5 +93,43 @@ public class MainActivity extends AppCompatActivity {
         };
 
         thread.start();
+    }
+
+    private void envoyerNotification() {
+        //Créer la notif
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        // Préparer la redirection au clic de la notif
+        Intent repeating_intent = new Intent(context, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 100, repeating_intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+
+        // Bouton "rappel 30mn"
+        Intent iRappel30Mn = new Intent(context, Notification.class);
+        iRappel30Mn.putExtra("rappel", "rappel30Mn");
+        PendingIntent pIntentRappel30Mn = PendingIntent.getBroadcast(context, 1, iRappel30Mn, PendingIntent.FLAG_UPDATE_CURRENT);
+
+
+        // Bouton "rappel 24h"
+        Intent iRappel24H = new Intent(context, Notification.class);
+        iRappel30Mn.putExtra("rappel", "rappel24H");
+        PendingIntent pIntentRappel24H = PendingIntent.getBroadcast(context, 1, iRappel24H, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        // Afficher la notification
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "Mon canal")
+                .setContentText("Dring Dring ⏲ !")
+                .setContentIntent(pendingIntent)
+                .setSmallIcon(R.drawable.icon)
+                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.icon))
+                .addAction(R.drawable.ic_launcher_foreground, "Rappel dans 30mn", pIntentRappel30Mn)
+                .addAction(R.drawable.ic_launcher_foreground, "Rappel dans 24h", pIntentRappel24H)
+//                .addAction(new NotificationCompat.Action.Builder(R.drawable.icon, "Rappeler à 22h", rappel30Mn).build())
+                .setColor(context.getResources().getColor(R.color.colorPrimary))
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setAutoCancel(true);
+
+
+        // Envoyer la notification
+        notificationManager.notify(100, builder.build());
     }
 }

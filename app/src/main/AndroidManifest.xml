@@ -22,7 +22,14 @@
         <activity android:name=".Code" />
         <activity android:name=".Chargement" />
 
-        <receiver android:name=".Notification_Reciever" />
+        <receiver android:name=".Notification" />
+        <receiver
+            android:name=".SampleBootReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
 
         <activity android:name=".MainActivity">
             <intent-filter>

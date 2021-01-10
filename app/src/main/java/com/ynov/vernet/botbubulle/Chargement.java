@@ -6,6 +6,7 @@ import android.hardware.fingerprint.FingerprintManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 

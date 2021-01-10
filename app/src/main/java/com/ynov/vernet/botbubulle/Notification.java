@@ -6,13 +6,24 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
+import android.os.Bundle;
+import android.text.NoCopySpan;
+import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 
-public class Notification_Reciever extends BroadcastReceiver {
+import java.util.Calendar;
+
+public class Notification extends BroadcastReceiver {
+
+    Intent intent;
+
+    private static final String TAG = "Notification";
+
     @Override
     public void onReceive(Context context, Intent intent) {
+        this.intent = intent;
+
 
         //Créer la notif
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -39,10 +50,14 @@ public class Notification_Reciever extends BroadcastReceiver {
                 .addAction(R.drawable.ic_launcher_foreground, "Rappel dans 15h", rappelDemain)
                 .addAction(R.drawable.ic_launcher_foreground, "Rappel dans 24h", rappelDemain)
                 .setColor(context.getResources().getColor(R.color.colorPrimary))
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setAutoCancel(true);
 
-
-        // Envoyer la notification
         notificationManager.notify(100, builder.build());
+
+
+        String action = intent.getStringExtra("rappel");
+        Log.d(TAG, "onReceive: " + action);
+
     }
 }
