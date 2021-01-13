@@ -7,4 +7,8 @@
     <string name="entrez_le_code">Entrez le code</string>
     <string name="valider">Valider</string>
     <string name="utiliser_la_reconnaissance_biom_trique">Utiliser la reconnaissance biométrique</string>
+
+    <string name="notification_channel_id" type="id">id</string>
+    <string name="notification_channel_title" type="id">Notification quotidienne</string>
+    <string name="notification_channel_description" type="id">desc</string>
 </resources>

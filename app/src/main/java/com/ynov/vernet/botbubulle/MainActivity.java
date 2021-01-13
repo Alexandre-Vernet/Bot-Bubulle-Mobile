@@ -1,10 +1,15 @@
 package com.ynov.vernet.botbubulle;
 
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.media.AudioManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -22,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     Context context;
     private int tHeures, tMinutes, tSecondes;
     ProgressBar progressBar;
+    private static final String CANAL = "Notification quotidienne";
 
     private static final String TAG = "MainActivity";
 
@@ -93,10 +99,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void envoyerNotification() {
-        // Create notification
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        // Prepare notification
+        // Prepare onclick notification redirection
         Intent repeating_intent = new Intent(context, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 100, repeating_intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -104,9 +108,8 @@ public class MainActivity extends AppCompatActivity {
         Intent iRappel30Mn = new Intent(context, Recall.class);
         PendingIntent pIntentRappel30Mn = PendingIntent.getBroadcast(context, 1, iRappel30Mn, PendingIntent.FLAG_UPDATE_CURRENT);
 
-
         // Display notification
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "Mon canal")
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CANAL)
                 .setContentText("Dring Dring ⏲ !")
                 .setContentIntent(pendingIntent)
                 .setSmallIcon(R.drawable.icon)
@@ -115,6 +118,21 @@ public class MainActivity extends AppCompatActivity {
                 .setColor(context.getResources().getColor(R.color.colorPrimary))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setAutoCancel(true);
+
+
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        // Create channel
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            String channelId = getString(R.string.notification_channel_id);
+            String channelTitle = getString(R.string.notification_channel_title);
+            String channelDescription = getString(R.string.notification_channel_description);
+
+            NotificationChannel notificationChannel = new NotificationChannel(channelId, channelTitle, NotificationManager.IMPORTANCE_DEFAULT);
+            notificationChannel.setDescription(channelDescription);
+            notificationManager.createNotificationChannel(notificationChannel);
+            builder.setChannelId(channelId);
+        }
 
         // Send notification
         notificationManager.notify(100, builder.build());
