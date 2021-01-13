@@ -23,8 +23,9 @@
         <activity android:name=".Chargement" />
 
         <receiver android:name=".Notification" />
+        <receiver android:name=".Recall" />
         <receiver
-            android:name=".SampleBootReceiver"
+            android:name=".BootReceiver"
             android:enabled="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />

@@ -1,6 +1,5 @@
 package com.ynov.vernet.botbubulle;
 
-import android.app.AlarmManager;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -33,29 +32,27 @@ public class MainActivity extends AppCompatActivity {
 
         context = getApplicationContext();
 
-        // Référencer les interface
         final TextView heures = findViewById(R.id.heures);
         final TextView minutes = findViewById(R.id.minutes);
         final TextView secondes = findViewById(R.id.secondes);
         progressBar = findViewById(R.id.progressBar);
 
         // Débug
-//        envoyerNotification();
-
+        envoyerNotification();
 
         // Vérifier l'heure pour l'envoie de la notification
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, 21);
-        calendar.set(Calendar.MINUTE, 40);
-        calendar.set(Calendar.SECOND, 0);
-
-        // Préparer la classe qui envoie la notification
-        Intent intent = new Intent(new Intent(getApplicationContext(), Notification.class));
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 100, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        // Créer l'alarme
-        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.set(Calendar.HOUR_OF_DAY, 21);
+//        calendar.set(Calendar.MINUTE, 45);
+//        calendar.set(Calendar.SECOND, 0);
+//
+//        // Préparer la classe qui envoie la notification
+//        Intent intent = new Intent(new Intent(getApplicationContext(), Notification.class));
+//        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 100, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+//
+//        // Créer l'alarme
+//        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+//        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
 
 
         // Mettre à jour le temps avant la prochaine notification
@@ -96,40 +93,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void envoyerNotification() {
-        //Créer la notif
+        // Create notification
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        // Préparer la redirection au clic de la notif
+        // Prepare notification
         Intent repeating_intent = new Intent(context, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 100, repeating_intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-
-        // Bouton "rappel 30mn"
-        Intent iRappel30Mn = new Intent(context, Notification.class);
-        iRappel30Mn.putExtra("rappel", "rappel30Mn");
+        // Button "remember in 30mn"
+        Intent iRappel30Mn = new Intent(context, Recall.class);
         PendingIntent pIntentRappel30Mn = PendingIntent.getBroadcast(context, 1, iRappel30Mn, PendingIntent.FLAG_UPDATE_CURRENT);
 
 
-        // Bouton "rappel 24h"
-        Intent iRappel24H = new Intent(context, Notification.class);
-        iRappel30Mn.putExtra("rappel", "rappel24H");
-        PendingIntent pIntentRappel24H = PendingIntent.getBroadcast(context, 1, iRappel24H, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        // Afficher la notification
+        // Display notification
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "Mon canal")
                 .setContentText("Dring Dring ⏲ !")
                 .setContentIntent(pendingIntent)
                 .setSmallIcon(R.drawable.icon)
                 .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.icon))
                 .addAction(R.drawable.ic_launcher_foreground, "Rappel dans 30mn", pIntentRappel30Mn)
-                .addAction(R.drawable.ic_launcher_foreground, "Rappel dans 24h", pIntentRappel24H)
-//                .addAction(new NotificationCompat.Action.Builder(R.drawable.icon, "Rappeler à 22h", rappel30Mn).build())
                 .setColor(context.getResources().getColor(R.color.colorPrimary))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setAutoCancel(true);
 
-
-        // Envoyer la notification
+        // Send notification
         notificationManager.notify(100, builder.build());
     }
 }

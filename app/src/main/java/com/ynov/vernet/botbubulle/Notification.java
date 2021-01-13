@@ -6,13 +6,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
-import android.os.Bundle;
-import android.text.NoCopySpan;
-import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
-
-import java.util.Calendar;
 
 public class Notification extends BroadcastReceiver {
 
@@ -24,40 +19,29 @@ public class Notification extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         this.intent = intent;
 
-
-        //Créer la notif
+        // Create notification
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        // Préparer la redirection au clic de la notif
+        // Prepare notification
         Intent repeating_intent = new Intent(context, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 100, repeating_intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        // Bouton "me rappeler demain"
-        final PendingIntent rappelDemain =
-                PendingIntent.getActivity(
-                        context,
-                        0,
-                        new Intent(context, Chargement.class),
-                        PendingIntent.FLAG_CANCEL_CURRENT
-                );
+        // Button remember in 30mn
+        Intent iRappel30Mn = new Intent(context, Notification.class);
+        PendingIntent pIntentRappel = PendingIntent.getBroadcast(context, 1, iRappel30Mn, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        // Afficher la notification
+
+        // Display notification
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "Mon canal")
                 .setContentText("Dring Dring ⏲ !")
                 .setContentIntent(pendingIntent)
                 .setSmallIcon(R.drawable.icon)
                 .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.icon))
-                .addAction(R.drawable.ic_launcher_foreground, "Rappel dans 15h", rappelDemain)
-                .addAction(R.drawable.ic_launcher_foreground, "Rappel dans 24h", rappelDemain)
+//                .addAction(R.drawable.ic_launcher_foreground, "Rappel dans 30mn", pIntentRappel)
                 .setColor(context.getResources().getColor(R.color.colorPrimary))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setAutoCancel(true);
 
         notificationManager.notify(100, builder.build());
-
-
-        String action = intent.getStringExtra("rappel");
-        Log.d(TAG, "onReceive: " + action);
-
     }
 }

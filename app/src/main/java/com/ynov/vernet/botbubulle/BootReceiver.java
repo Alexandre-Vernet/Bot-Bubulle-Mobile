@@ -8,22 +8,22 @@ import android.content.Intent;
 
 import java.util.Calendar;
 
-public class SampleBootReceiver extends BroadcastReceiver {
+public class BootReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
 
-            // Vérifier l'heure pour l'envoie de la notification
+            // Send notification at 21:45
             Calendar calendar = Calendar.getInstance();
-            calendar.set(Calendar.HOUR_OF_DAY, 19);
-            calendar.set(Calendar.MINUTE, 0);
+            calendar.set(Calendar.HOUR_OF_DAY, 21);
+            calendar.set(Calendar.MINUTE, 45);
             calendar.set(Calendar.SECOND, 0);
 
-            // Préparer la classe qui envoie la notification
+            // Prepare notification
             intent = new Intent(new Intent(context, Notification.class));
             PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 100, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-            // Créer l'alarme
+            // Create alarm
             AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
             alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
         }
