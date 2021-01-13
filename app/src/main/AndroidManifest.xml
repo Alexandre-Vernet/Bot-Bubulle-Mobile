@@ -18,9 +18,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:windowSoftInputMode="adjustResize">
-        <activity android:name=".Biometrie" />
-        <activity android:name=".Code" />
-        <activity android:name=".Chargement" />
+
+        <activity android:name=".LoadingActivity"></activity>
+
+        <activity android:name=".BiometricsActivity" />
+        <activity android:name=".CodeActivity" />
 
         <receiver android:name=".Notification" />
         <receiver android:name=".Recall" />

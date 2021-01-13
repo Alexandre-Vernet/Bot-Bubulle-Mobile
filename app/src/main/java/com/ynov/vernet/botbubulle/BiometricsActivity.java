@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import java.util.concurrent.Executors;
 
-public class Biometrie extends AppCompatActivity {
+public class BiometricsActivity extends AppCompatActivity {
 
     BiometricPrompt biometricPrompt;
 
@@ -20,7 +20,7 @@ public class Biometrie extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_biometrie);
 
-        final Biometrie biometrie = this;
+        final BiometricsActivity biometrie = this;
 
         // Demander l'authentification
         biometricPrompt = new BiometricPrompt.Builder(getApplicationContext())
@@ -30,7 +30,7 @@ public class Biometrie extends AppCompatActivity {
                     // Bouton annuler
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(getApplicationContext(), Code.class);
+                        Intent intent = new Intent(getApplicationContext(), CodeActivity.class);
                         startActivity(intent);
                         finish();
                     }
@@ -58,7 +58,7 @@ public class Biometrie extends AppCompatActivity {
                 super.onAuthenticationError(errorCode, errString);
 
                 // Se connecter par code
-                Intent intent = new Intent(getApplicationContext(), Code.class);
+                Intent intent = new Intent(getApplicationContext(), CodeActivity.class);
                 startActivity(intent);
                 finish();
             }

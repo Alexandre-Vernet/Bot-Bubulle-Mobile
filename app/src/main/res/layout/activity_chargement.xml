@@ -6,7 +6,7 @@
     android:background="@drawable/fond"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".Chargement">
+    tools:context=".LoadingActivity">
 
     <ImageView
         android:layout_width="375dp"

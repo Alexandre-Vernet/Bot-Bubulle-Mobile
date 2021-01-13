@@ -21,7 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.concurrent.Executors;
 
-public class Code extends AppCompatActivity {
+public class CodeActivity extends AppCompatActivity {
 
     EditText editTextCode;
     Button btnValider;
@@ -42,7 +42,7 @@ public class Code extends AppCompatActivity {
         textViewBiometrie = findViewById(R.id.textViewBiometrie);
 
 
-        final Code biometrie = this;
+        final CodeActivity biometrie = this;
         final Context context = this;
 
         // Ouvrir le clavier à l'ouverture de l'activité
@@ -58,7 +58,7 @@ public class Code extends AppCompatActivity {
                 // Si le code est bon
                 if (editTextCode.getText().toString().equals("2711")) {
                     // Démarrer l'activité principale
-                    Toast.makeText(Code.this, "Code bon", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CodeActivity.this, "Code bon", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
                     finish();
@@ -80,7 +80,7 @@ public class Code extends AppCompatActivity {
                     }, 2000);
 
                     // Vibrer
-                    vibe = (Vibrator) Code.this.getSystemService(Context.VIBRATOR_SERVICE);
+                    vibe = (Vibrator) CodeActivity.this.getSystemService(Context.VIBRATOR_SERVICE);
                     vibe.vibrate(400);
                 }
             }
@@ -104,7 +104,7 @@ public class Code extends AppCompatActivity {
                                 // Bouton annuler
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    Intent intent = new Intent(getApplicationContext(), Code.class);
+                                    Intent intent = new Intent(getApplicationContext(), CodeActivity.class);
                                     startActivity(intent);
                                     finish();
                                 }
@@ -132,7 +132,7 @@ public class Code extends AppCompatActivity {
                             super.onAuthenticationError(errorCode, errString);
 
                             // Se connecter par code
-                            Intent intent = new Intent(getApplicationContext(), Code.class);
+                            Intent intent = new Intent(getApplicationContext(), CodeActivity.class);
                             startActivity(intent);
                             finish();
                         }
@@ -148,7 +148,7 @@ public class Code extends AppCompatActivity {
         super.onBackPressed();
 
         // Lancer la classe Chargement
-        Intent intent = new Intent(getApplicationContext(), Chargement.class);
+        Intent intent = new Intent(getApplicationContext(), LoadingActivity.class);
         startActivity(intent);
         finish();
     }

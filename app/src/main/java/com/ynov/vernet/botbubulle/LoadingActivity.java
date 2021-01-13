@@ -6,11 +6,10 @@ import android.hardware.fingerprint.FingerprintManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class Chargement extends AppCompatActivity {
+public class LoadingActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +33,7 @@ public class Chargement extends AppCompatActivity {
                 if (fingerprintManager.isHardwareDetected() || fingerprintManager.hasEnrolledFingerprints()) {
 
                     // Se connecter par empreinte
-                    Intent intent = new Intent(getApplicationContext(), Biometrie.class);
+                    Intent intent = new Intent(getApplicationContext(), BiometricsActivity.class);
                     startActivity(intent);
                     finish();
                 }
@@ -42,7 +41,7 @@ public class Chargement extends AppCompatActivity {
                 // Si l'appareil ne possède pas de capteur d'empreinte digitale
                 else {
                     // Se connecter par code
-                    Intent intent = new Intent(getApplicationContext(), Code.class);
+                    Intent intent = new Intent(getApplicationContext(), CodeActivity.class);
                     startActivity(intent);
                     finish();
                 }
