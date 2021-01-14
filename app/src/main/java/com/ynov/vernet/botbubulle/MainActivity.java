@@ -1,14 +1,13 @@
 package com.ynov.vernet.botbubulle;
 
+import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.media.AudioManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -17,6 +16,9 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
+import androidx.preference.PreferenceManager;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -25,10 +27,12 @@ import java.util.GregorianCalendar;
 public class MainActivity extends AppCompatActivity {
 
     Context context;
+    TextView notification_set_to;
     private int tHeures, tMinutes, tSecondes;
     ProgressBar progressBar;
-    private static final String CANAL = "Notification quotidienne";
+    FloatingActionButton floatingActionButtonSettings;
 
+    private static final String CANAL = "Notification quotidienne";
     private static final String TAG = "MainActivity";
 
     @Override
@@ -38,30 +42,44 @@ public class MainActivity extends AppCompatActivity {
 
         context = getApplicationContext();
 
+        notification_set_to = findViewById(R.id.notification_set_to);
         final TextView heures = findViewById(R.id.heures);
         final TextView minutes = findViewById(R.id.minutes);
         final TextView secondes = findViewById(R.id.secondes);
         progressBar = findViewById(R.id.progressBar);
+        floatingActionButtonSettings = findViewById(R.id.floatingActionButtonSettings);
+
+        // Set defaut time to send notification
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String timeSendNotification = prefs.getString("timeSendNotification", null);
+
+        if (timeSendNotification == null) {
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString("hourSendNotification", "21h45");
+            editor.apply();
+        }
+
+        notification_set_to.setText("Notification set to " + timeSendNotification);
 
         // Débug
-        envoyerNotification();
+//        envoyerNotification();
 
-        // Vérifier l'heure pour l'envoie de la notification
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.set(Calendar.HOUR_OF_DAY, 21);
-//        calendar.set(Calendar.MINUTE, 45);
-//        calendar.set(Calendar.SECOND, 0);
-//
-//        // Préparer la classe qui envoie la notification
-//        Intent intent = new Intent(new Intent(getApplicationContext(), Notification.class));
-//        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 100, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-//
-//        // Créer l'alarme
-//        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-//        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+        // Check time to send notification
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 21);
+        calendar.set(Calendar.MINUTE, 45);
+        calendar.set(Calendar.SECOND, 0);
+
+        // Prepare notification
+        Intent intent = new Intent(new Intent(getApplicationContext(), Notification.class));
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 100, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        // Create alarm
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
 
 
-        // Mettre à jour le temps avant la prochaine notification
+        // Update time before next notification
         Thread thread = new Thread() {
             @Override
             public void run() {
@@ -96,6 +114,15 @@ public class MainActivity extends AppCompatActivity {
         };
 
         thread.start();
+
+        // Settings
+        floatingActionButtonSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
+                finish();
+            }
+        });
     }
 
     private void envoyerNotification() {
