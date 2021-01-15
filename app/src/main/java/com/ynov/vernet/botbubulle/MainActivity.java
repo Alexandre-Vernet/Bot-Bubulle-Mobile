@@ -49,13 +49,12 @@ public class MainActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
         floatingActionButtonSettings = findViewById(R.id.floatingActionButtonSettings);
 
-        // Set defaut time to send notification
+        // Set defaut time to send notification at 21h45
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String timeSendNotification = prefs.getString("timeSendNotification", null);
-
         if (timeSendNotification == null) {
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putString("hourSendNotification", "21h45");
+            SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+            editor.putString("timeSendNotification", "21h45");
             editor.apply();
         }
 
@@ -127,6 +126,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void envoyerNotification() {
 
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
         // Prepare onclick notification redirection
         Intent repeating_intent = new Intent(context, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 100, repeating_intent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -147,15 +148,13 @@ public class MainActivity extends AppCompatActivity {
                 .setAutoCancel(true);
 
 
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         // Create channel
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            String channelId = getString(R.string.notification_channel_id);
-            String channelTitle = getString(R.string.notification_channel_title);
-            String channelDescription = getString(R.string.notification_channel_description);
+            String channelId = "id";
+            String channelDescription = "desc";
 
-            NotificationChannel notificationChannel = new NotificationChannel(channelId, channelTitle, NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationChannel notificationChannel = new NotificationChannel(channelId, CANAL, NotificationManager.IMPORTANCE_DEFAULT);
             notificationChannel.setDescription(channelDescription);
             notificationManager.createNotificationChannel(notificationChannel);
             builder.setChannelId(channelId);

@@ -13,7 +13,7 @@ public class BootReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
 
-            // Send notification at 21:45
+            // Send notification at 21:45 at reboot phone
             Calendar calendar = Calendar.getInstance();
             calendar.set(Calendar.HOUR_OF_DAY, 21);
             calendar.set(Calendar.MINUTE, 45);
