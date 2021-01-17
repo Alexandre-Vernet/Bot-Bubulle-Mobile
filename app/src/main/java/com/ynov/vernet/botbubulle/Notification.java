@@ -1,5 +1,6 @@
 package com.ynov.vernet.botbubulle;
 
+import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -11,6 +12,8 @@ import android.os.Build;
 
 import androidx.core.app.NotificationCompat;
 
+import java.util.Calendar;
+
 public class Notification extends BroadcastReceiver {
 
     Intent intent;
@@ -20,6 +23,24 @@ public class Notification extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         this.intent = intent;
+
+        // At phone boot
+        if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
+            // Send notification at 21:30 at reboot phone
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.HOUR_OF_DAY, 21);
+            calendar.set(Calendar.MINUTE, 30);
+            calendar.set(Calendar.SECOND, 0);
+
+            // Prepare notification
+            intent = new Intent(new Intent(context, Notification.class));
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 100, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+            // Create alarm
+            AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+        }
+
 
         // Prepare onclick notification redirection
         Intent repeating_intent = new Intent(context, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -53,5 +74,6 @@ public class Notification extends BroadcastReceiver {
 
         // Send notification
         notificationManager.notify(100, builder.build());
+
     }
 }

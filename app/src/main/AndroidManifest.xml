@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.SET_ALARM" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="true"
@@ -18,28 +19,28 @@
         android:theme="@style/AppTheme"
         android:windowSoftInputMode="adjustResize">
 
+        <!--Activity-->
         <activity android:name=".SettingsActivity" />
         <activity android:name=".LoadingActivity" />
         <activity android:name=".BiometricsActivity" />
         <activity android:name=".CodeActivity" />
-
-        <receiver android:name=".Notification" />
-        <receiver android:name=".Recall" />
-        <receiver
-            android:name=".BootReceiver"
-            android:enabled="true">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
-
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
 
+        <!--Receiver-->
+        <receiver
+            android:name=".Notification"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.PACKAGE_REPLACED" />
+                <action android:name="android.intent.action.PACKAGE_RESTARTED" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".Recall" />
+    </application>
 </manifest>

@@ -57,10 +57,11 @@ public class MainActivity extends AppCompatActivity {
         String timeSendNotification = prefs.getString("timeSendNotification", null);
         if (timeSendNotification == null) {
             SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
-            editor.putString("timeSendNotification", "21h45");
+            editor.putString("timeSendNotification", "21h30");
             editor.apply();
         }
         textViewNotification.setText(getString(R.string.notification_set_to, timeSendNotification));
+
 
         // Send notification with user's preferences
         Calendar calendar = Calendar.getInstance();
@@ -91,8 +92,8 @@ public class MainActivity extends AppCompatActivity {
                 calendar.set(Calendar.SECOND, 0);
                 break;
             default:
-                calendar.set(Calendar.HOUR_OF_DAY, 18);
-                calendar.set(Calendar.MINUTE, 51);
+                calendar.set(Calendar.HOUR_OF_DAY, 21);
+                calendar.set(Calendar.MINUTE, 30);
                 calendar.set(Calendar.SECOND, 0);
                 break;
         }
@@ -179,15 +180,12 @@ public class MainActivity extends AppCompatActivity {
 
 
         // Create channel
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            String channelId = "id";
-            String channelDescription = "desc";
-
-            NotificationChannel notificationChannel = new NotificationChannel(channelId, CANAL, NotificationManager.IMPORTANCE_DEFAULT);
-            notificationChannel.setDescription(channelDescription);
-            notificationManager.createNotificationChannel(notificationChannel);
-            builder.setChannelId(channelId);
-        }
+        String channelId = "id";
+        String channelDescription = "desc";
+        NotificationChannel notificationChannel = new NotificationChannel(channelId, CANAL, NotificationManager.IMPORTANCE_DEFAULT);
+        notificationChannel.setDescription(channelDescription);
+        notificationManager.createNotificationChannel(notificationChannel);
+        builder.setChannelId(channelId);
 
         // Send notification
         notificationManager.notify(100, builder.build());
