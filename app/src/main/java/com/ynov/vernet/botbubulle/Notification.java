@@ -44,15 +44,12 @@ public class Notification extends BroadcastReceiver {
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         // Create channel
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            String channelId = "id";
-            String channelDescription = "desc";
-
-            NotificationChannel notificationChannel = new NotificationChannel(channelId, CANAL, NotificationManager.IMPORTANCE_DEFAULT);
-            notificationChannel.setDescription(channelDescription);
-            notificationManager.createNotificationChannel(notificationChannel);
-            builder.setChannelId(channelId);
-        }
+        String channelId = "id";
+        String channelDescription = "desc";
+        NotificationChannel notificationChannel = new NotificationChannel(channelId, CANAL, NotificationManager.IMPORTANCE_DEFAULT);
+        notificationChannel.setDescription(channelDescription);
+        notificationManager.createNotificationChannel(notificationChannel);
+        builder.setChannelId(channelId);
 
         // Send notification
         notificationManager.notify(100, builder.build());

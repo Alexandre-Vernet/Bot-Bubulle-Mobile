@@ -27,7 +27,7 @@ import java.util.GregorianCalendar;
 public class MainActivity extends AppCompatActivity {
 
     Context context;
-    TextView notification_set_to;
+    TextView textViewNotification;
     private int tHeures, tMinutes, tSecondes;
     ProgressBar progressBar;
     FloatingActionButton floatingActionButtonSettings;
@@ -42,14 +42,17 @@ public class MainActivity extends AppCompatActivity {
 
         context = getApplicationContext();
 
-        notification_set_to = findViewById(R.id.notification_set_to);
-        final TextView heures = findViewById(R.id.heures);
-        final TextView minutes = findViewById(R.id.minutes);
-        final TextView secondes = findViewById(R.id.secondes);
+        textViewNotification = findViewById(R.id.textViewNotification);
         progressBar = findViewById(R.id.progressBar);
         floatingActionButtonSettings = findViewById(R.id.floatingActionButtonSettings);
 
-        // Set defaut time to send notification at 21h45
+
+        final TextView heures = findViewById(R.id.heures);
+        final TextView minutes = findViewById(R.id.minutes);
+        final TextView secondes = findViewById(R.id.secondes);
+
+
+        // Set default time to send notification at 21h45
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String timeSendNotification = prefs.getString("timeSendNotification", null);
         if (timeSendNotification == null) {
@@ -57,17 +60,42 @@ public class MainActivity extends AppCompatActivity {
             editor.putString("timeSendNotification", "21h45");
             editor.apply();
         }
+        textViewNotification.setText(getString(R.string.notification_set_to, timeSendNotification));
 
-        notification_set_to.setText("Notification set to " + timeSendNotification);
-
-        // Débug
-//        envoyerNotification();
-
-        // Check time to send notification
+        // Send notification with user's preferences
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, 21);
-        calendar.set(Calendar.MINUTE, 45);
-        calendar.set(Calendar.SECOND, 0);
+        switch (timeSendNotification) {
+            case "20h":
+                calendar.set(Calendar.HOUR_OF_DAY, 20);
+                calendar.set(Calendar.MINUTE, 0);
+                calendar.set(Calendar.SECOND, 0);
+                break;
+            case "20h30":
+                calendar.set(Calendar.HOUR_OF_DAY, 20);
+                calendar.set(Calendar.MINUTE, 30);
+                calendar.set(Calendar.SECOND, 0);
+                break;
+            case "21h":
+                calendar.set(Calendar.HOUR_OF_DAY, 21);
+                calendar.set(Calendar.MINUTE, 0);
+                calendar.set(Calendar.SECOND, 0);
+                break;
+            case "22h00":
+                calendar.set(Calendar.HOUR_OF_DAY, 22);
+                calendar.set(Calendar.MINUTE, 0);
+                calendar.set(Calendar.SECOND, 0);
+                break;
+            case "22h30":
+                calendar.set(Calendar.HOUR_OF_DAY, 22);
+                calendar.set(Calendar.MINUTE, 30);
+                calendar.set(Calendar.SECOND, 0);
+                break;
+            default:
+                calendar.set(Calendar.HOUR_OF_DAY, 18);
+                calendar.set(Calendar.MINUTE, 51);
+                calendar.set(Calendar.SECOND, 0);
+                break;
+        }
 
         // Prepare notification
         Intent intent = new Intent(new Intent(getApplicationContext(), Notification.class));
@@ -77,6 +105,9 @@ public class MainActivity extends AppCompatActivity {
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
 
+
+        // Débug
+//        envoyerNotification();
 
         // Update time before next notification
         Thread thread = new Thread() {
@@ -125,7 +156,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void envoyerNotification() {
-
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         // Prepare onclick notification redirection
@@ -146,7 +176,6 @@ public class MainActivity extends AppCompatActivity {
                 .setColor(context.getResources().getColor(R.color.colorPrimary))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setAutoCancel(true);
-
 
 
         // Create channel
