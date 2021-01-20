@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceManager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -92,8 +93,8 @@ public class MainActivity extends AppCompatActivity {
                 calendar.set(Calendar.SECOND, 0);
                 break;
             default:
-                calendar.set(Calendar.HOUR_OF_DAY, 21);
-                calendar.set(Calendar.MINUTE, 30);
+                calendar.set(Calendar.HOUR_OF_DAY, 23);
+                calendar.set(Calendar.MINUTE, 57);
                 calendar.set(Calendar.SECOND, 0);
                 break;
         }
@@ -171,10 +172,10 @@ public class MainActivity extends AppCompatActivity {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CANAL)
                 .setContentText("Dring Dring ⏲ !")
                 .setContentIntent(pendingIntent)
-                .setSmallIcon(R.drawable.icon)
+                .setSmallIcon(R.drawable.icon_notification)
                 .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.icon))
                 .addAction(R.drawable.ic_launcher_foreground, "Rappel dans 30mn", pIntentRappel30Mn)
-                .setColor(context.getResources().getColor(R.color.colorPrimary))
+                .setColor(ContextCompat.getColor(context, R.color.notification))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setAutoCancel(true);
 

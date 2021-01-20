@@ -28,7 +28,6 @@ public class CodeActivity extends AppCompatActivity {
     TextView textViewBiometrie;
     Vibrator vibe;
 
-
     BiometricPrompt biometricPrompt;
 
     @Override

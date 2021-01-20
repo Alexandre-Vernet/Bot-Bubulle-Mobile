@@ -1,6 +1,5 @@
 package com.ynov.vernet.botbubulle;
 
-import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -8,11 +7,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
-import android.os.Build;
 
 import androidx.core.app.NotificationCompat;
-
-import java.util.Calendar;
+import androidx.core.content.ContextCompat;
 
 public class Notification extends BroadcastReceiver {
 
@@ -25,21 +22,21 @@ public class Notification extends BroadcastReceiver {
         this.intent = intent;
 
         // At phone boot
-        if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
-            // Send notification at 21:30 at reboot phone
-            Calendar calendar = Calendar.getInstance();
-            calendar.set(Calendar.HOUR_OF_DAY, 21);
-            calendar.set(Calendar.MINUTE, 30);
-            calendar.set(Calendar.SECOND, 0);
-
-            // Prepare notification
-            intent = new Intent(new Intent(context, Notification.class));
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 100, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-            // Create alarm
-            AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
-        }
+//        if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
+//            // Send notification at 21:30 at reboot phone
+//            Calendar calendar = Calendar.getInstance();
+//            calendar.set(Calendar.HOUR_OF_DAY, 21);
+//            calendar.set(Calendar.MINUTE, 30);
+//            calendar.set(Calendar.SECOND, 0);
+//
+//            // Prepare notification
+//            intent = new Intent(new Intent(context, Notification.class));
+//            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 100, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+//
+//            // Create alarm
+//            AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+//            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+//        }
 
 
         // Prepare onclick notification redirection
@@ -54,11 +51,11 @@ public class Notification extends BroadcastReceiver {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CANAL)
                 .setContentText("Dring Dring ⏲ !")
                 .setContentIntent(pendingIntent)
-                .setSmallIcon(R.drawable.icon)
+                .setSmallIcon(R.drawable.icon_notification)
                 .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.icon))
                 //.addAction(R.drawable.ic_launcher_foreground, "Rappel dans 30mn", pIntentRappel30Mn)
-                .setColor(context.getResources().getColor(R.color.colorPrimary))
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setColor(ContextCompat.getColor(context, R.color.notification))
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setAutoCancel(true);
 
 
