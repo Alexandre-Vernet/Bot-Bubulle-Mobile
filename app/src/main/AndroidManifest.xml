@@ -21,7 +21,6 @@
         android:windowSoftInputMode="adjustResize">
 
         <!--Activity-->
-        <activity android:name=".SettingsActivity" />
         <activity android:name=".LoadingActivity" />
         <activity android:name=".BiometricsActivity" />
         <activity android:name=".CodeActivity" />
@@ -35,7 +34,8 @@
         <!--Receiver-->
         <receiver
             android:name=".Notification"
-            android:enabled="true">
+            android:enabled="true"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.media.action.DISPLAY_NOTIFICATION" />

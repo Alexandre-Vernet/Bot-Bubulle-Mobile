@@ -8,11 +8,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
-import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
@@ -28,10 +29,7 @@ import java.util.GregorianCalendar;
 public class MainActivity extends AppCompatActivity {
 
     Context context;
-    TextView textViewNotification;
-    private int tHeures, tMinutes, tSecondes;
-    ProgressBar progressBar;
-    FloatingActionButton floatingActionButtonSettings;
+    TimePicker timePicker;
 
     private static final String CANAL = "Notification quotidienne";
     private static final String TAG = "MainActivity";
@@ -42,119 +40,37 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         context = getApplicationContext();
+        timePicker = findViewById(R.id.timePicker);
 
-        textViewNotification = findViewById(R.id.textViewNotification);
-        progressBar = findViewById(R.id.progressBar);
-        floatingActionButtonSettings = findViewById(R.id.floatingActionButtonSettings);
+        // Implement Calendar
+        final Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
 
+        // Change hour to send notification
+        timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
+            @Override
+            public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
+                int hour = timePicker.getHour();
+                int minutes = timePicker.getMinute();
 
-        final TextView heures = findViewById(R.id.heures);
-        final TextView minutes = findViewById(R.id.minutes);
-        final TextView secondes = findViewById(R.id.secondes);
-
-
-        // Set default time to send notification at 21h45
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        String timeSendNotification = prefs.getString("timeSendNotification", null);
-        if (timeSendNotification == null) {
-            SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
-            editor.putString("timeSendNotification", "21h30");
-            editor.apply();
-        }
-        textViewNotification.setText(getString(R.string.notification_set_to, timeSendNotification));
-
-
-        // Send notification with user's preferences
-        Calendar calendar = Calendar.getInstance();
-        switch (timeSendNotification) {
-            case "20h":
-                calendar.set(Calendar.HOUR_OF_DAY, 20);
-                calendar.set(Calendar.MINUTE, 0);
+                // Update time
+                calendar.set(Calendar.HOUR_OF_DAY, hour);
+                calendar.set(Calendar.MINUTE, minutes);
                 calendar.set(Calendar.SECOND, 0);
-                break;
-            case "20h30":
-                calendar.set(Calendar.HOUR_OF_DAY, 20);
-                calendar.set(Calendar.MINUTE, 30);
-                calendar.set(Calendar.SECOND, 0);
-                break;
-            case "21h":
-                calendar.set(Calendar.HOUR_OF_DAY, 21);
-                calendar.set(Calendar.MINUTE, 0);
-                calendar.set(Calendar.SECOND, 0);
-                break;
-            case "22h00":
-                calendar.set(Calendar.HOUR_OF_DAY, 22);
-                calendar.set(Calendar.MINUTE, 0);
-                calendar.set(Calendar.SECOND, 0);
-                break;
-            case "22h30":
-                calendar.set(Calendar.HOUR_OF_DAY, 22);
-                calendar.set(Calendar.MINUTE, 30);
-                calendar.set(Calendar.SECOND, 0);
-                break;
-            default:
-                calendar.set(Calendar.HOUR_OF_DAY, 23);
-                calendar.set(Calendar.MINUTE, 57);
-                calendar.set(Calendar.SECOND, 0);
-                break;
-        }
+            }
+        });
 
-        // Prepare notification
-        Intent intent = new Intent(new Intent(getApplicationContext(), Notification.class));
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 100, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        // Wake up phone to send notification
+        AlarmManager alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(context, Notification.class);
+        PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
 
-        // Create alarm
-        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
-
+//        alarmMgr.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntent);
+        alarmMgr.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                AlarmManager.INTERVAL_DAY, alarmIntent);
 
         // Débug
 //        envoyerNotification();
-
-        // Update time before next notification
-        Thread thread = new Thread() {
-            @Override
-            public void run() {
-                try {
-                    while (!isInterrupted()) {
-                        // Actualiser toutes les secondes le thread
-                        Thread.sleep(1000);
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                // Masquer la barre de chargement
-                                progressBar.setVisibility(View.INVISIBLE);
-
-                                // Récupérer le temps avant 22h
-                                Date date = new Date();
-                                Calendar calendar = GregorianCalendar.getInstance();
-                                calendar.setTime(date);
-                                tHeures = 21 - calendar.get(Calendar.HOUR_OF_DAY);
-                                tMinutes = 59 - calendar.get(Calendar.MINUTE);
-                                tSecondes = 59 - calendar.get(Calendar.SECOND);
-
-                                // Afficher le temps
-                                heures.setText("" + tHeures + " h ");
-                                minutes.setText("" + tMinutes + " mn ");
-                                secondes.setText("" + tSecondes + " s");
-                            }
-                        });
-                    }
-                } catch (InterruptedException ignored) {
-                }
-            }
-        };
-
-        thread.start();
-
-        // Settings
-        floatingActionButtonSettings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
-                finish();
-            }
-        });
     }
 
     private void envoyerNotification() {

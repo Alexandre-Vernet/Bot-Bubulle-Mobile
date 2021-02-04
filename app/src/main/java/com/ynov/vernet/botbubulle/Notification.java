@@ -71,6 +71,5 @@ public class Notification extends BroadcastReceiver {
 
         // Send notification
         notificationManager.notify(100, builder.build());
-
     }
 }
