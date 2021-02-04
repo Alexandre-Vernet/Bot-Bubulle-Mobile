@@ -9,27 +9,21 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.ProgressBar;
-import android.widget.TextView;
+import android.widget.Button;
 import android.widget.TimePicker;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
-import androidx.preference.PreferenceManager;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 
 public class MainActivity extends AppCompatActivity {
 
     Context context;
-    TimePicker timePicker;
+    TimePicker timePickerEditNotification;
+    Button btnUpdateNotification;
 
     private static final String CANAL = "Notification quotidienne";
     private static final String TAG = "MainActivity";
@@ -40,25 +34,40 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         context = getApplicationContext();
-        timePicker = findViewById(R.id.timePicker);
+        timePickerEditNotification = findViewById(R.id.timePickerEditNotification);
+        btnUpdateNotification = findViewById(R.id.btnUpdateNotification);
+
+        // Set TimePicker with time to send notification
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        int hour = sharedPref.getInt("hour", 21);
+        int minutes = sharedPref.getInt("minutes", 30);
+        timePickerEditNotification.setHour(hour);
+        timePickerEditNotification.setMinute(minutes);
 
         // Implement Calendar
         final Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
 
-        // Change hour to send notification
-        timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
+        // Change time to send notification
+        timePickerEditNotification.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
             @Override
             public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
-                int hour = timePicker.getHour();
-                int minutes = timePicker.getMinute();
+                int hour = timePickerEditNotification.getHour();
+                int minutes = timePickerEditNotification.getMinute();
 
-                // Update time
-                calendar.set(Calendar.HOUR_OF_DAY, hour);
-                calendar.set(Calendar.MINUTE, minutes);
-                calendar.set(Calendar.SECOND, 0);
+                // Save time in memory
+                SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putInt("hour", hour);
+                editor.putInt("minutes", minutes);
+                editor.apply();
             }
         });
+
+        // Send notification at specific time
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, minutes);
+        calendar.set(Calendar.SECOND, 0);
 
         // Wake up phone to send notification
         AlarmManager alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
@@ -68,9 +77,6 @@ public class MainActivity extends AppCompatActivity {
 //        alarmMgr.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntent);
         alarmMgr.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                 AlarmManager.INTERVAL_DAY, alarmIntent);
-
-        // Débug
-//        envoyerNotification();
     }
 
     private void envoyerNotification() {

@@ -69,7 +69,7 @@ public class Notification extends BroadcastReceiver {
         notificationManager.createNotificationChannel(notificationChannel);
         builder.setChannelId(channelId);
 
-        // Send notification
+        // Display notification
         notificationManager.notify(100, builder.build());
     }
 }

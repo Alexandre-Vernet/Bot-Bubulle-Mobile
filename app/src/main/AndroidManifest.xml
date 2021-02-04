@@ -20,7 +20,7 @@
         android:theme="@style/AppTheme"
         android:windowSoftInputMode="adjustResize">
 
-        <!--Activity-->
+        <!--Activities-->
         <activity android:name=".LoadingActivity" />
         <activity android:name=".BiometricsActivity" />
         <activity android:name=".CodeActivity" />
@@ -31,7 +31,7 @@
             </intent-filter>
         </activity>
 
-        <!--Receiver-->
+        <!--Receivers-->
         <receiver
             android:name=".Notification"
             android:enabled="true"
