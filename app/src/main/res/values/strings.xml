@@ -11,5 +11,6 @@
     <string name="send_notification_at">Send notification at</string>
     <string name="notification">Notification</string>
     <string name="notification_set_to">Notification set to %1$S</string>
+    <string name="message_sent">Message sent</string>
 
 </resources>
