@@ -1,5 +1,7 @@
 package com.ynov.vernet.botbubulle;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -9,12 +11,15 @@ import android.os.Vibrator;
 import android.telephony.SmsManager;
 import android.widget.Toast;
 
+import androidx.core.app.ActivityCompat;
+
 public class SMS extends BroadcastReceiver {
 
     String noTel = "0641694541";
+    //    String noTel = "0778555958";
     String message = "Dring Dring ⏲ !";
     MediaPlayer sendingMessage;
-
+    Activity activity;
     private static final String TAG = "SMS";
 
     @Override

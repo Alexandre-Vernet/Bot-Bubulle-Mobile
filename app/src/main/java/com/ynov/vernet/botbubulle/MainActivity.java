@@ -1,5 +1,6 @@
 package com.ynov.vernet.botbubulle;
 
+import android.Manifest;
 import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -12,6 +13,7 @@ import android.os.Bundle;
 import android.widget.TimePicker;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 
@@ -29,6 +31,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Ask permission send sms
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, 0);
 
         context = getApplicationContext();
         timePickerEditNotification = findViewById(R.id.timePickerEditNotification);
@@ -73,8 +78,6 @@ public class MainActivity extends AppCompatActivity {
 //        alarmMgr.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntent);
         alarmMgr.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                 AlarmManager.INTERVAL_DAY, alarmIntent);
-
-        sendNotification();
     }
 
     private void sendNotification() {
