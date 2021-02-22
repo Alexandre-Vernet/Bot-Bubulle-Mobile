@@ -21,29 +21,30 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:windowSoftInputMode="adjustResize">
-
-        <!--Activities-->
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings"></activity>
+        <!-- Activities -->
         <activity android:name=".LoadingActivity" />
         <activity android:name=".BiometricsActivity" />
         <activity android:name=".CodeActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!--Receivers-->
+        </activity> <!-- Receivers -->
         <receiver
             android:name=".Notification"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <action android:name="android.media.action.DISPLAY_NOTIFICATION" />
             </intent-filter>
         </receiver>
-
         <receiver android:name=".SMS" />
         <receiver android:name=".Boot">
             <intent-filter>
@@ -54,4 +55,5 @@
             </intent-filter>
         </receiver>
     </application>
+
 </manifest>

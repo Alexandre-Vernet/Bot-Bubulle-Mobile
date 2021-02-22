@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
@@ -20,6 +21,7 @@ public class Notification extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         this.intent = intent;
+        Log.d(TAG, "onReceive: Sending notification ...");
 
         // Prepare onclick notification redirection
         Intent repeating_intent = new Intent(context, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

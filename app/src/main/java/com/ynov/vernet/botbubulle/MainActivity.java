@@ -1,6 +1,7 @@
 package com.ynov.vernet.botbubulle;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -10,6 +11,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TimePicker;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,34 +41,38 @@ public class MainActivity extends AppCompatActivity {
         timePickerEditNotification = findViewById(R.id.timePickerEditNotification);
 
         // Set TimePicker with time to send notification
-        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
-        int hour = sharedPref.getInt("hour", 21);
-        int minutes = sharedPref.getInt("minutes", 30);
-        timePickerEditNotification.setHour(hour);
+        SharedPreferences sp = getSharedPreferences("time", Activity.MODE_PRIVATE);
+        int hours = sp.getInt("hours", 21);
+        int minutes = sp.getInt("minutes", 30);
+
+        timePickerEditNotification.setHour(hours);
         timePickerEditNotification.setMinute(minutes);
 
         // Implement Calendar
-        final Calendar calendar = Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
 
         // Change time to send notification
         timePickerEditNotification.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
             @Override
             public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
-                int hour = timePickerEditNotification.getHour();
+
+                Log.d(TAG, "onTimeChanged: ");
+                // Get time from time picker
+                int hours = timePickerEditNotification.getHour();
                 int minutes = timePickerEditNotification.getMinute();
 
                 // Save time in memory
-                SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putInt("hour", hour);
+                SharedPreferences sp = getSharedPreferences("time", Activity.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putInt("hours", hours);
                 editor.putInt("minutes", minutes);
                 editor.apply();
             }
         });
 
-        // Send notification at specific time
-        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        // Send notification at time picker
+        calendar.set(Calendar.HOUR_OF_DAY, hours);
         calendar.set(Calendar.MINUTE, minutes);
         calendar.set(Calendar.SECOND, 0);
 
@@ -74,8 +80,6 @@ public class MainActivity extends AppCompatActivity {
         AlarmManager alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, Notification.class);
         PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
-
-//        alarmMgr.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntent);
         alarmMgr.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                 AlarmManager.INTERVAL_DAY, alarmIntent);
     }

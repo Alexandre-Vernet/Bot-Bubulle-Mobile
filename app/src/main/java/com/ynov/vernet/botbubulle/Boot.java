@@ -1,28 +1,38 @@
 package com.ynov.vernet.botbubulle;
 
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.util.Log;
 
 import java.util.Calendar;
 
 public class Boot extends BroadcastReceiver {
 
+    private static final String TAG = "Boot";
+
     @Override
     public void onReceive(Context context, Intent intent) {
 
         // At phone boot
-        if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
+        if (intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
 
             // Implement Calendar
             final Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(System.currentTimeMillis());
 
+            // Get time set in memory
+            SharedPreferences sp = context.getSharedPreferences("time", Activity.MODE_PRIVATE);
+            int hours = sp.getInt("hours", 21);
+            int minutes = sp.getInt("minutes", 30);
+
             // Send notification at 21h30
-            calendar.set(Calendar.HOUR_OF_DAY, 21);
-            calendar.set(Calendar.MINUTE, 30);
+            calendar.set(Calendar.HOUR_OF_DAY, hours);
+            calendar.set(Calendar.MINUTE, minutes);
             calendar.set(Calendar.SECOND, 0);
 
             // Wake up phone to send notification

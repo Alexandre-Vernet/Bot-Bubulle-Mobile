@@ -1,6 +1,5 @@
 package com.ynov.vernet.botbubulle;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
@@ -10,8 +9,6 @@ import android.media.MediaPlayer;
 import android.os.Vibrator;
 import android.telephony.SmsManager;
 import android.widget.Toast;
-
-import androidx.core.app.ActivityCompat;
 
 public class SMS extends BroadcastReceiver {
 
