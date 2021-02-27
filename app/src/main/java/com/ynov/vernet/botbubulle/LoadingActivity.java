@@ -18,29 +18,26 @@ public class LoadingActivity extends AppCompatActivity {
 
         final Context context = this;
 
-        // Jouer le son des bulles
-        final MediaPlayer sonBulles = MediaPlayer.create(this, R.raw.bulles);
-        sonBulles.start();
+        // Play bubbles sound
+        final MediaPlayer mediaPlayerBubbles = MediaPlayer.create(this, R.raw.bulles);
+        mediaPlayerBubbles.start();
 
-        // Au bout de 2s de chargement
+        // 2s of loading
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 FingerprintManager fingerprintManager = (FingerprintManager) context.getSystemService(Context.FINGERPRINT_SERVICE);
 
-                // Si l'appareil possède un capteur d'empreinte digitale
+                // If phone has fingerprint sensor
                 assert fingerprintManager != null;
                 if (fingerprintManager.isHardwareDetected() || fingerprintManager.hasEnrolledFingerprints()) {
 
-                    // Se connecter par empreinte
+                    // Log with fingerprint
                     Intent intent = new Intent(getApplicationContext(), BiometricsActivity.class);
                     startActivity(intent);
                     finish();
-                }
-
-                // Si l'appareil ne possède pas de capteur d'empreinte digitale
-                else {
-                    // Se connecter par code
+                } else {
+                    // Log with code
                     Intent intent = new Intent(getApplicationContext(), CodeActivity.class);
                     startActivity(intent);
                     finish();

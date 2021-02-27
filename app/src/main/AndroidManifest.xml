@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="com.ynov.vernet.botbubulle">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -21,20 +20,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:windowSoftInputMode="adjustResize">
-        <activity
-            android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings"></activity>
+
         <!-- Activities -->
-        <activity android:name=".LoadingActivity" />
-        <activity android:name=".BiometricsActivity" />
-        <activity android:name=".CodeActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".LoadingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- Receivers -->
+
+        </activity>
+        <activity android:name=".BiometricsActivity" />
+        <activity android:name=".CodeActivity" />
+        <activity android:name=".MainActivity" />
+        <!-- Receivers -->
         <receiver
             android:name=".Notification"
             android:enabled="true"

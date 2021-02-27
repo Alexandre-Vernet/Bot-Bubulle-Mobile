@@ -1,32 +1,16 @@
 <resources>
-    <string name="app_name">Bot Bubulle</string>
-    <string name="canal">Notification quotidienne</string>
+    <string name="app_name" translatable="false">Bot Bubulle</string>
+    <string name="canal">Daily notification</string>
     <string name="icone">Icone</string>
-    <string name="bubulle">Bubulle</string>
-    <string name="temps_avant_22h">Temps avant 22h :</string>
-    <string name="entrez_le_code">Entrez le code</string>
-    <string name="valider">Valider</string>
-    <string name="utiliser_la_reconnaissance_biom_trique">Utiliser la reconnaissance biométrique</string>
-    <string name="general">General</string>
-    <string name="send_notification_at">Send notification at</string>
+    <string name="bubulle" translatable="false">Bubulle</string>
+    <string name="enter_code">Enter code</string>
+    <string name="valider">Validate</string>
     <string name="notification">Notification</string>
-    <string name="notification_set_to">Notification set to %1$S</string>
     <string name="message_sent">Message sent</string>
-    <string name="title_activity_settings">SettingsActivity</string>
-
-    <!-- Preference Titles -->
-    <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
-
-    <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
-
-    <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="biometrics">Biometrics</string>
+    <string name="use_biometrics_to_log_in">Use biometrics to log in</string>
+    <string name="login_password">Log in with a password</string>
+    <string name="authenticated">Authenticated</string>
+    <string name="error_while_sending_message">Error while sending message</string>
 
 </resources>

@@ -46,7 +46,7 @@ public class SMS extends BroadcastReceiver {
             Toast.makeText(context, R.string.message_sent, Toast.LENGTH_LONG).show();
 
         } catch (Exception e) {
-            Toast.makeText(context, "Error while sending message", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, R.string.error_while_sending_message, Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
     }
