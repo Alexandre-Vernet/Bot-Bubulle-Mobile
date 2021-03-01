@@ -1,12 +1,15 @@
 # Bot-Bubulle
-### Développé sous Android Studio 4.1.2
-### par Alexandre Vernet
+
+Système de notification quotidienne à une heure programmée
+
+Développé sous Android Studio 4.1.2
+
+Par Alexandre Vernet
 
 
 ![icon](https://user-images.githubusercontent.com/72151831/109391919-cae3c480-7919-11eb-8338-929ae4af2fdd.png)
 
 
-Système de notification quotidienne à une heure programmée
 
 ## Description
 L'utilisateur programme une heure pour l'envoie de la notification. A partir de ce moment, une notification sera envoyé chaque jour à l'heure programmée. A tout moment, l'utilisateur peut changer l'heure et la notification sera envoyée à la nouvelle heure programmée.
