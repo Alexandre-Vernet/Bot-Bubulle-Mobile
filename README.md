@@ -48,6 +48,10 @@ Après avoir passé l'écran de chargement et la sécurité, il est possible d'a
 Lorsque l'utilisateur reçoit la notification, il peut cliquer sur le bouton "envoyer msg" pour envoyer automatiquement un SMS pré-rempli.
 
 
+![notification](https://user-images.githubusercontent.com/72151831/109867375-b29bde80-7c66-11eb-9b3b-260820737a9f.jpg)
+
+
+
 
 ## Gestion des données
 Au changement de l'heure de la notification, l'heure est stockée dans la mémoire et permet au téléphone, lorsqu'il est redémarré, de redéfinir l'heure de la notification en lisant ces données. Ces données servent également à définir les aiguilles de l'horloge (activity_main) sur l'heure de la prochaine notification.
