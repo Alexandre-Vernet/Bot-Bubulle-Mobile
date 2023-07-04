@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 public class SMS extends BroadcastReceiver {
 
-    String phoneNumber = "0782101533";
     MediaPlayer sendingMessage;
 
     @Override
@@ -29,6 +28,7 @@ public class SMS extends BroadcastReceiver {
 
             // Send SMS
             SmsManager smsManager = SmsManager.getDefault();
+            String phoneNumber = context.getString(R.string.phone_number);
             smsManager.sendTextMessage(phoneNumber, null, generateRandomMessage(), null, null);
 
             // Play sound

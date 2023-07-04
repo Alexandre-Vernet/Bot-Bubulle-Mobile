@@ -1,12 +1,10 @@
 <resources>
     <string name="app_name" translatable="false">Bot Bubulle</string>
-    <string name="canal">Daily notification</string>
-    <string name="icone">Icone</string>
-    <string name="bubulle" translatable="false">Bubulle</string>
-    <string name="enter_code">Enter code</string>
-    <string name="valider">Validate</string>
-    <string name="notification">Notification</string>
+    <string name="canal" translatable="false">Daily notification</string>
+    <string name="icon" translatable="false">Icon</string>
+    <string name="phone_number" translatable="false">0782101533</string>
     <string name="message_sent">Message sent</string>
+    <string name="send_sms">Send SMS</string>
     <string name="error_while_sending_message">Error while sending message</string>
 
 </resources>

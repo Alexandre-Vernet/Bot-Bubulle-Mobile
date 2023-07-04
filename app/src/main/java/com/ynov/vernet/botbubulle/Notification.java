@@ -15,12 +15,8 @@ import androidx.core.content.ContextCompat;
 
 public class Notification extends BroadcastReceiver {
 
-    Intent intent;
-    private static final String CANAL = "Daily notification";
-
     @Override
     public void onReceive(Context context, Intent intent) {
-        this.intent = intent;
         sendNotification(context);
     }
 
@@ -33,13 +29,16 @@ public class Notification extends BroadcastReceiver {
         Intent iSMS = new Intent(context, SMS.class);
         PendingIntent pIntentSMS = PendingIntent.getBroadcast(context, 1, iSMS, PendingIntent.FLAG_IMMUTABLE);
 
+        String canal = context.getString(R.string.canal);
+        String sendSMS =  context.getString(R.string.send_sms);
+
         // Display notification
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CANAL)
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, canal)
                 .setContentText(generateRandomMessage())
                 .setContentIntent(pendingIntent)
                 .setSmallIcon(R.drawable.icon_notification)
                 .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.icon))
-                .addAction(R.drawable.ic_launcher_foreground, "Send SMS", pIntentSMS)
+                .addAction(R.drawable.ic_launcher_foreground, sendSMS, pIntentSMS)
                 .setColor(ContextCompat.getColor(context, R.color.notification))
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setAutoCancel(true);
@@ -50,7 +49,7 @@ public class Notification extends BroadcastReceiver {
         // Create channel
         String channelId = "id";
         String channelDescription = "desc";
-        NotificationChannel notificationChannel = new NotificationChannel(channelId, CANAL, NotificationManager.IMPORTANCE_DEFAULT);
+        NotificationChannel notificationChannel = new NotificationChannel(channelId, canal, NotificationManager.IMPORTANCE_DEFAULT);
         notificationChannel.setDescription(channelDescription);
         notificationManager.createNotificationChannel(notificationChannel);
         builder.setChannelId(channelId);
