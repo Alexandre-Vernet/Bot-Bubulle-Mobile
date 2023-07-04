@@ -1,5 +1,7 @@
 package com.ynov.vernet.botbubulle;
 
+import static com.ynov.vernet.botbubulle.SMS.generateRandomMessage;
+
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -10,10 +12,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TimePicker;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
@@ -29,13 +33,14 @@ public class MainActivity extends AppCompatActivity {
     private static final String CANAL = "Notification quotidienne";
     private static final String TAG = "MainActivity";
 
+    @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Ask permission send sms
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, 0);
+        // Ask permission to send sms and notification
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS, Manifest.permission.POST_NOTIFICATIONS}, 0);
 
         context = getApplicationContext();
         timePickerEditNotification = findViewById(R.id.timePickerEditNotification);
@@ -94,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Display notification
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CANAL)
-                .setContentText("Dring Dring ⏲ !")
+                .setContentText(generateRandomMessage())
                 .setContentIntent(pendingIntent)
                 .setSmallIcon(R.drawable.icon_notification)
                 .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.icon))
