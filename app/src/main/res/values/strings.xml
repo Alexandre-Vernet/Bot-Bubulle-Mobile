@@ -7,10 +7,6 @@
     <string name="valider">Validate</string>
     <string name="notification">Notification</string>
     <string name="message_sent">Message sent</string>
-    <string name="biometrics">Biometrics</string>
-    <string name="use_biometrics_to_log_in">Use biometrics to log in</string>
-    <string name="login_password">Log in with a password</string>
-    <string name="authenticated">Authenticated</string>
     <string name="error_while_sending_message">Error while sending message</string>
 
 </resources>

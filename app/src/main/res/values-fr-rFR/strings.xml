@@ -6,9 +6,5 @@
     <string name="valider">Valider</string>
     <string name="notification">Notification</string>
     <string name="message_sent">Message envoyé</string>
-    <string name="biometrics">Biométrie</string>
-    <string name="use_biometrics_to_log_in">Utilisez votre biométrie pour vous connecter</string>
-    <string name="login_password">Se connecter avec un mot de passe</string>
-    <string name="authenticated">Connecté</string>
     <string name="error_while_sending_message">Erreur lors de l\'envoie du message</string>
 </resources>
