@@ -1,22 +1,22 @@
 package com.ynov.vernet.botbubulle;
 
-import android.app.Activity;
+import static android.content.Context.VIBRATOR_SERVICE;
+
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.telephony.SmsManager;
 import android.widget.Toast;
 
 public class SMS extends BroadcastReceiver {
 
-    String noTel = "0782101533";
+    String phoneNumber = "0782101533";
     String message = "Dring Dring ⏲ !";
     MediaPlayer sendingMessage;
-    Activity activity;
-    private static final String TAG = "SMS";
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -32,15 +32,15 @@ public class SMS extends BroadcastReceiver {
 
             // Send SMS
             SmsManager smsManager = SmsManager.getDefault();
-            smsManager.sendTextMessage(noTel, null, message, null, null);
+            smsManager.sendTextMessage(phoneNumber, null, message, null, null);
 
             // Play sound
             sendingMessage.start();
 
             // Vibrate
-            Vibrator vibe = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-            long[] pattern = {0, 100};
-            vibe.vibrate(pattern, -1);
+            Vibrator vibe = (Vibrator) context.getSystemService(VIBRATOR_SERVICE);
+            vibe.vibrate(VibrationEffect.createOneShot(150, VibrationEffect.DEFAULT_AMPLITUDE));
+
 
             Toast.makeText(context, R.string.message_sent, Toast.LENGTH_LONG).show();
 

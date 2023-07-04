@@ -7,14 +7,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import java.util.Calendar;
 
 public class Boot extends BroadcastReceiver {
-
-    private static final String TAG = "Boot";
-
     @Override
     public void onReceive(Context context, Intent intent) {
 
@@ -38,7 +34,7 @@ public class Boot extends BroadcastReceiver {
             // Wake up phone to send notification
             AlarmManager alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
             intent = new Intent(context, Notification.class);
-            PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+            PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
             alarmMgr.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                     AlarmManager.INTERVAL_DAY, alarmIntent);
         }
