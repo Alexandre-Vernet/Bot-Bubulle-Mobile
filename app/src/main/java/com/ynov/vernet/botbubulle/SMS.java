@@ -12,8 +12,7 @@ import android.widget.Toast;
 
 public class SMS extends BroadcastReceiver {
 
-    String noTel = "0641694541";
-    //    String noTel = "0778555958";
+    String noTel = "0782101533";
     String message = "Dring Dring ⏲ !";
     MediaPlayer sendingMessage;
     Activity activity;
