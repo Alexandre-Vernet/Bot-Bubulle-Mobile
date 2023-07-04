@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        // TODO : This is for testing purpose only
-        sendNotification(context);
+        // Info : This is for testing purpose only
+//        sendNotification(context);
     }
 }

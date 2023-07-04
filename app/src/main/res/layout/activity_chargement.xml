@@ -11,7 +11,7 @@
     <ImageView
         android:layout_width="375dp"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/icone"
+        android:contentDescription="@string/icon"
         android:src="@drawable/icon" />
 
     <ProgressBar

@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="canal">Notification quotidienne</string>
-    <string name="icone">Icone</string>
-    <string name="enter_code">Entrer le code</string>
-    <string name="valider">Valider</string>
-    <string name="notification">Notification</string>
     <string name="message_sent">Message envoyé</string>
+    <string name="send_sms">Envoyer un msg</string>
     <string name="error_while_sending_message">Erreur lors de l\'envoie du message</string>
 </resources>
