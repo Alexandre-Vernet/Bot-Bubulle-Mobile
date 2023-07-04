@@ -84,14 +84,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void sendNotification() {
-
         // Prepare onclick notification redirection
         Intent repeating_intent = new Intent(context, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 100, repeating_intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 100, repeating_intent, PendingIntent.FLAG_IMMUTABLE);
 
         // Button "send sms"
         Intent iSMS = new Intent(context, SMS.class);
-        PendingIntent pIntentSMS = PendingIntent.getBroadcast(context, 1, iSMS, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pIntentSMS = PendingIntent.getBroadcast(context, 1, iSMS, PendingIntent.FLAG_IMMUTABLE);
 
         // Display notification
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CANAL)
