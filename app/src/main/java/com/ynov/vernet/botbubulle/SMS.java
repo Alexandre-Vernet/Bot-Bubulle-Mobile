@@ -12,6 +12,8 @@ import android.os.Vibrator;
 import android.telephony.SmsManager;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class SMS extends BroadcastReceiver {
 
     MediaPlayer sendingMessage;
@@ -27,9 +29,10 @@ public class SMS extends BroadcastReceiver {
             notificationManager.cancel(100);
 
             // Send SMS
-            SmsManager smsManager = SmsManager.getDefault();
+            SmsManager sms = SmsManager.getDefault();
+            ArrayList<String> parts = sms.divideMessage(generateRandomMessage());
             String phoneNumber = context.getString(R.string.phone_number);
-            smsManager.sendTextMessage(phoneNumber, null, generateRandomMessage(), null, null);
+            sms.sendMultipartTextMessage(phoneNumber, null, parts, null, null);
 
             // Play sound
             sendingMessage.start();
@@ -38,7 +41,7 @@ public class SMS extends BroadcastReceiver {
             Vibrator vibe = (Vibrator) context.getSystemService(VIBRATOR_SERVICE);
             vibe.vibrate(VibrationEffect.createOneShot(150, VibrationEffect.DEFAULT_AMPLITUDE));
 
-
+             // Display toast
             Toast.makeText(context, R.string.message_sent, Toast.LENGTH_LONG).show();
 
         } catch (Exception e) {
@@ -55,13 +58,13 @@ public class SMS extends BroadcastReceiver {
                 "Ne laisse pas la pilule te jouer un tour : prends-la maintenant et assure-toi que les bébés ne viennent pas te faire coucou à l'improviste !",
                 "La pilule contraceptive te rappelle : 'Je suis la petite pilule qui te dit : Pas de bébé aujourd'hui, merci !' Ne l'oublie pas !",
                 "S'il te plaît, prends ta pilule contraceptive aujourd'hui, sinon ton calendrier risque de se remplir avec des anniversaires de bébés non planifiés. 😅",
-                "Ne laisse pas ta pilule contraceptive se sentir délaissée ! Prends-la maintenant et montre-lui que tu es un maître de la planification familiale 👍",
-                "Attention, la pilule contraceptive est ton alliée secrète contre les bébés surprises. Ne laisse pas ton superpouvoir de contrôle des naissances s'éteindre aujourd'hui ! 💊💪",
+                "Ne laisse pas ta pilule se sentir délaissée ! Prends-la maintenant et montre-lui que tu es un maître de la planification familiale 👍",
+                "Attention, la pilule est ton alliée secrète contre les bébés surprises. Ne laisse pas ton superpouvoir de contrôle des naissances s'éteindre aujourd'hui ! 💊💪",
                 "Chère pilule contraceptive, je sais que parfois tu as l'impression d'être oubliée, mais aujourd'hui, je te promets de ne pas te ghoster. Sois prête à être avalée ! 😀",
-                "Psst... Toi là-bas ! N'oublie pas ta pilule contraceptive aujourd'hui, sinon les cigognes pourraient organiser une manifestation surprise devant chez toi. 🦢",
-                "Hey toi, prêt(e) pour le grand spectacle de la contraception ? Prends ta pilule et assure-toi que la salle de bébé reste fermée à clé ! 🎩🐰",
+                "Psst... Toi là-bas ! N'oublie pas ta pilule aujourd'hui, sinon les cigognes pourraient organiser une manifestation surprise devant chez toi. 🦢",
+                "Hey toi, prête pour le grand spectacle de la contraception ? Prends ta pilule et assure-toi que la salle de bébé reste fermée à clé ! 🎩🐰",
                 "Rappel comique : ne laisse pas ta pilule contraceptive se sentir abandonnée, elle aimerait être prise avec autant d'attention que ton téléphone. 📱💊",
-                "Ne fais pas attendre ta pilule contraceptive comme si c'était le dernier épisode de ta série préférée. Montre-lui un peu d'amour et prends-la maintenant ! 📺😉",
+                "Ne fais pas attendre ta pilule comme si c'était le dernier épisode de ta série préférée. Montre-lui un peu d'amour et prends-la maintenant ! 📺😉",
                 "La pilule contraceptive dit : 'Si tu m'oublies aujourd'hui, prépare-toi à chanter la berceuse des couches et des biberons !' Prends-la et sauve tes tympans ! 🎶🍼"
         };
         int random = (int) (Math.random() * messages.length);
