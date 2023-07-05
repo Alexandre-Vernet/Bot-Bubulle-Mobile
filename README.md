@@ -1,10 +1,6 @@
 # Bot-Bubulle
 
-Système de notification quotidienne à une heure programmée
-
-Développé sous Android Studio 4.1.2
-
-Par Alexandre Vernet
+Daily Notification System with Scheduled Time
 
 
 ![icon](https://user-images.githubusercontent.com/72151831/109391919-cae3c480-7919-11eb-8338-929ae4af2fdd.png)
@@ -12,46 +8,30 @@ Par Alexandre Vernet
 
 
 ## Description
-L'utilisateur programme une heure pour l'envoie de la notification. A partir de ce moment, une notification sera envoyé chaque jour à l'heure programmée. A tout moment, l'utilisateur peut changer l'heure et la notification sera envoyée à la nouvelle heure programmée.
+The user sets a specific time for sending notifications. Starting from that moment, a notification will be sent every day at the scheduled time. At any time, the user can change the notification time, and the notification will be sent at the new scheduled time.
 
 
 
-## Ecran de chargement
-A l'ouverture de l'application, un écran de chargement animé apparaît pendant 2 secondes.
+## Loading Screen
+Upon opening the application, an animated loading screen appears for 2 seconds.
 
 
 ![loading](https://user-images.githubusercontent.com/72151831/109391659-7a1f9c00-7918-11eb-8b50-4f0b203f8a43.jpg)
 
 
-
-## Sécurité
-Après l'écran de chargement, l'application demande à l'utilisateur de se connecter par biométrie si l'appareil possède un capteur d'empreinte digitale, sinon, il est possible de saisir manuellement un code secret.
-
-
-![biometrics](https://user-images.githubusercontent.com/72151831/109391633-5d836400-7918-11eb-9c79-161440337639.jpg)
-
-
-
-![activity_code](https://user-images.githubusercontent.com/72151831/109391635-5fe5be00-7918-11eb-97ec-f97c556a044b.jpg)
-
-
-
-## Programmer l'heure de la notification
-Après avoir passé l'écran de chargement et la sécurité, il est possible d'accéder à l'écran principal pour planifier une notification. A la modification
-
+## Schedule Notification Time
+From the main screen, the user can schedule a time to receive notification
 
 ![activity_main](https://user-images.githubusercontent.com/72151831/109391715-c79c0900-7918-11eb-90c8-b7e57d6cd1c2.jpg)
 
 
 
-## Notification reçu
-Lorsque l'utilisateur reçoit la notification, il peut cliquer sur le bouton "envoyer msg" pour envoyer automatiquement un SMS pré-rempli.
-
+## Received Notification
+When the user receives the notification, he can click the "Send Message" button to automatically send a pre-filled SMS.
 
 ![notification](https://user-images.githubusercontent.com/72151831/109867375-b29bde80-7c66-11eb-9b3b-260820737a9f.jpg)
 
 
 
-
-## Gestion des données
-Au changement de l'heure de la notification, l'heure est stockée dans la mémoire et permet au téléphone, lorsqu'il est redémarré, de redéfinir l'heure de la notification en lisant ces données. Ces données servent également à définir les aiguilles de l'horloge (activity_main) sur l'heure de la prochaine notification.
+## Persist data
+When the notification time is changed, the time is stored in memory, allowing the phone to reset the notification time upon restarting by reading this data. This data is also used to set the clock hands (activity_main) to the time of the next notification.
