@@ -41,7 +41,7 @@ public class SMS extends BroadcastReceiver {
             Vibrator vibe = (Vibrator) context.getSystemService(VIBRATOR_SERVICE);
             vibe.vibrate(VibrationEffect.createOneShot(150, VibrationEffect.DEFAULT_AMPLITUDE));
 
-             // Display toast
+            // Display toast
             Toast.makeText(context, R.string.message_sent, Toast.LENGTH_LONG).show();
 
         } catch (Exception e) {
@@ -52,7 +52,7 @@ public class SMS extends BroadcastReceiver {
 
     public static String generateRandomMessage() {
         String[] messages = {
-                "Dring Dring ⏲ !",
+                "Dring Dring 🕰️💊 !",
                 "Hey toi, n'oublie pas ta petite pilule magique aujourd'hui ! Elle a un don pour empêcher les surprises non désirées. Allez, avale-la et reste tranquille ! 😉",
                 "Attention, mission anti-bébé en cours : prends ta pilule contraceptive et garde la porte fermée aux cigognes ! 🚫👶",
                 "Ne laisse pas la pilule te jouer un tour : prends-la maintenant et assure-toi que les bébés ne viennent pas te faire coucou à l'improviste !",
@@ -68,6 +68,6 @@ public class SMS extends BroadcastReceiver {
                 "La pilule contraceptive dit : 'Si tu m'oublies aujourd'hui, prépare-toi à chanter la berceuse des couches et des biberons !' Prends-la et sauve tes tympans ! 🎶🍼"
         };
         int random = (int) (Math.random() * messages.length);
-        return messages[random];
+        return messages[0];
     }
 }
