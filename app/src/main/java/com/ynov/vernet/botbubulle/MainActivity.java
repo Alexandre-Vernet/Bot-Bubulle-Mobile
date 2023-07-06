@@ -31,29 +31,22 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // Ask permission to send sms and notification
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS, Manifest.permission.POST_NOTIFICATIONS}, 0);
+        ActivityCompat.requestPermissions(this, new String[]{
+                Manifest.permission.SEND_SMS,
+                Manifest.permission.POST_NOTIFICATIONS,
+                Manifest.permission.RECEIVE_BOOT_COMPLETED,
+                Manifest.permission.WAKE_LOCK
+        }, 0);
 
         context = getApplicationContext();
         timePickerEditNotification = findViewById(R.id.timePickerEditNotification);
 
         // Set TimePicker with values from memory
         SharedPreferences sp = getSharedPreferences("time", Activity.MODE_PRIVATE);
-        int sharedPreferencesHours = sp.getInt("hours", 21);
-        int sharedPreferencesMinutes = sp.getInt("minutes", 30);
+        int sharedPreferencesHours = sp.getInt("hours", 20);
+        int sharedPreferencesMinutes = sp.getInt("minutes", 0);
         timePickerEditNotification.setHour(sharedPreferencesHours);
         timePickerEditNotification.setMinute(sharedPreferencesMinutes);
-
-        // Implement Calendar to get current time and set alarm to send notification
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-
-        // Wake up phone to send notification
-        AlarmManager alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(context, Notification.class);
-        PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
-        alarmMgr.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-                AlarmManager.INTERVAL_DAY, alarmIntent);
-
 
         // On time change, save time in memory
         timePickerEditNotification.setOnTimeChangedListener((view, hourOfDay, minute) -> {
@@ -70,6 +63,21 @@ public class MainActivity extends AppCompatActivity {
 
 
         // Info : This is for testing purpose only
-//        sendNotification(context);
+         debug(context);
+    }
+
+    void debug(Context context) {
+        // Implement Calendar to get current time and set alarm to send notification
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+
+        // Create alarm to send notification at time from memory
+        AlarmManager alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(context, Notification.class);
+        PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+        alarmMgr.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                AlarmManager.INTERVAL_DAY, alarmIntent);
+
+        sendNotification(context);
     }
 }

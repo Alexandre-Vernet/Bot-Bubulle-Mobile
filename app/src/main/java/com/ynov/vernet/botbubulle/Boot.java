@@ -11,6 +11,9 @@ import android.content.SharedPreferences;
 import java.util.Calendar;
 
 public class Boot extends BroadcastReceiver {
+
+    private static final String TAG = "Boot";
+
     @Override
     public void onReceive(Context context, Intent intent) {
 
@@ -23,15 +26,15 @@ public class Boot extends BroadcastReceiver {
 
             // Get time set in memory
             SharedPreferences sp = context.getSharedPreferences("time", Activity.MODE_PRIVATE);
-            int hours = sp.getInt("hours", 21);
-            int minutes = sp.getInt("minutes", 30);
+            int hours = sp.getInt("hours", 20);
+            int minutes = sp.getInt("minutes", 0);
 
-            // Send notification at 21h30
+            // Set Calendar with time from memory
             calendar.set(Calendar.HOUR_OF_DAY, hours);
             calendar.set(Calendar.MINUTE, minutes);
             calendar.set(Calendar.SECOND, 0);
 
-            // Wake up phone to send notification
+            // Create alarm to send notification at time from memory
             AlarmManager alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
             intent = new Intent(context, Notification.class);
             PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
