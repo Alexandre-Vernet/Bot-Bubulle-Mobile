@@ -35,3 +35,6 @@ When the user receives the notification, he can click the "Send Message" button 
 
 ## Persist data
 When the notification time is changed, the time is stored in memory, allowing the phone to reset the notification time upon restarting by reading this data. This data is also used to set the clock hands (activity_main) to the time of the next notification.
+
+## Problem
+If you don't receive the notification, check the rights in the app setting and uncheck the setting "suspend activity if app is unused"
