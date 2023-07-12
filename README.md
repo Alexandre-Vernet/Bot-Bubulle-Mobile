@@ -29,7 +29,7 @@ From the main screen, the user can schedule a time to receive notification
 ## Received Notification
 When the user receives the notification, he can click the "Send Message" button to automatically send a pre-filled SMS.
 
-![notification](https://user-images.githubusercontent.com/72151831/109867375-b29bde80-7c66-11eb-9b3b-260820737a9f.jpg)
+![notification](https://github.com/Alexandre-Vernet/Bot-Bubulle-Mobile/assets/72151831/9a5c1cf7-bc66-4f91-b834-00a9a9c94aa3)
 
 
 
