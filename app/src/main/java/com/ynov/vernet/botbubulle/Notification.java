@@ -36,7 +36,7 @@ public class Notification extends BroadcastReceiver {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, canal)
                 .setContentText(generateRandomMessage())
                 .setContentIntent(pendingIntent)
-                .setSmallIcon(R.drawable.icon_notification)
+                .setSmallIcon(R.drawable.icon)
                 .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.icon))
                 .addAction(R.drawable.ic_launcher_foreground, sendSMS, pIntentSMS)
                 .setColor(ContextCompat.getColor(context, R.color.notification))
