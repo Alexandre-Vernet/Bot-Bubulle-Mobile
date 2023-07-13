@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         // Info : This is for testing purpose only
-         debug(context);
+//         debug(context);
     }
 
     void debug(Context context) {

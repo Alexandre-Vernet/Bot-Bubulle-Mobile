@@ -31,7 +31,11 @@ public class SMS extends BroadcastReceiver {
             // Send SMS
             SmsManager sms = SmsManager.getDefault();
             ArrayList<String> parts = sms.divideMessage(generateRandomMessage());
-            String phoneNumber = context.getString(R.string.phone_number);
+            String phoneNumber = PhoneNumber.getPhoneNumber();  // Phone number has format +33XXXXXXXXX
+            if (phoneNumber.length() != 12) {
+                Toast.makeText(context, R.string.error_format_phone_number, Toast.LENGTH_LONG).show();
+                return;
+            }
             sms.sendMultipartTextMessage(phoneNumber, null, parts, null, null);
 
             // Play sound
