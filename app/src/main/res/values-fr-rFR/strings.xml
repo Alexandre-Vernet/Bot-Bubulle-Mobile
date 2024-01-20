@@ -4,4 +4,5 @@
     <string name="send_sms">Envoyer un msg</string>
     <string name="error_while_sending_message">Erreur lors de l\'envoie du message</string>
     <string name="error_format_phone_number">Il y a une erreur dans le format du numéro de téléphone</string>
+    <string name="error_fetching_fcm_registration_token">Impossible de récupérer le token de notification</string>
 </resources>

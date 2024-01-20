@@ -5,7 +5,6 @@ import static com.ynov.vernet.botbubulle.SMS.generateRandomMessage;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
@@ -13,14 +12,9 @@ import android.graphics.BitmapFactory;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 
-public class Notification extends BroadcastReceiver {
+public class Notification {
 
-    @Override
-    public void onReceive(Context context, Intent intent) {
-        sendNotification(context);
-    }
-
-    public static void sendNotification(Context context) {
+    public void sendNotification(Context context) {
         // Prepare onclick notification redirection
         Intent intent = new Intent(context, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 100, intent, PendingIntent.FLAG_IMMUTABLE);

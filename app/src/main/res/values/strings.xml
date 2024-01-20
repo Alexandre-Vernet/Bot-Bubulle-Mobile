@@ -7,4 +7,5 @@
     <string name="send_sms">Send SMS</string>
     <string name="error_while_sending_message">Error while sending message</string>
     <string name="error_format_phone_number">There is an error in the phone number format</string>
+    <string name="error_fetching_fcm_registration_token">Error while fetching notification token</string>
 </resources>

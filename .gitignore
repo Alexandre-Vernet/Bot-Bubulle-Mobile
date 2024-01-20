@@ -12,3 +12,10 @@
 /captures
 .externalNativeBuild
 .cxx
+/.idea/
+/caches/
+/daemon/
+/wrapper/
+/native/
+/jdks/
+/android/
