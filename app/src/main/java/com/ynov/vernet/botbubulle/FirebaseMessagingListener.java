@@ -7,13 +7,13 @@ public class FirebaseMessagingListener extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-
         Notification notification = new Notification();
         notification.sendNotification(getApplicationContext());
     }
 
     @Override
     public void onNewToken(String token) {
-
+        Authentication authentication = new Authentication(getApplicationContext());
+        authentication.storeNotificationToken();
     }
 }
