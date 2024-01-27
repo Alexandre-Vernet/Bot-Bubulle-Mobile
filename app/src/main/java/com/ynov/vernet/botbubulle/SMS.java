@@ -16,17 +16,17 @@ import java.util.ArrayList;
 
 public class SMS extends BroadcastReceiver {
 
-    MediaPlayer sendingMessage;
+    MediaPlayer mediaPlayerMessageSent;
 
     @Override
     public void onReceive(Context context, Intent intent) {
         // Add sound
-        sendingMessage = MediaPlayer.create(context, R.raw.ring);
+        mediaPlayerMessageSent = MediaPlayer.create(context, R.raw.ring);
 
         try {
             // Dismiss last notification
             NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-            notificationManager.cancel(100);
+            notificationManager.cancel(1);
 
             // Send SMS
             SmsManager sms = SmsManager.getDefault();
@@ -39,7 +39,7 @@ public class SMS extends BroadcastReceiver {
             sms.sendMultipartTextMessage(phoneNumber, null, parts, null, null);
 
             // Play sound
-            sendingMessage.start();
+            mediaPlayerMessageSent.start();
 
             // Vibrate
             Vibrator vibe = (Vibrator) context.getSystemService(VIBRATOR_SERVICE);
