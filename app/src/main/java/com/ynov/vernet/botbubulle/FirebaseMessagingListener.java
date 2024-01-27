@@ -1,5 +1,6 @@
 package com.ynov.vernet.botbubulle;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -13,7 +14,10 @@ public class FirebaseMessagingListener extends FirebaseMessagingService {
 
     @Override
     public void onNewToken(String token) {
-        Authentication authentication = new Authentication(getApplicationContext());
-        authentication.storeNotificationToken();
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+//        if (firebaseAuth.getCurrentUser() != null) {
+//            Authentication authentication = new Authentication(getApplicationContext());
+//            authentication.storeNotificationToken();
+//        }
     }
 }

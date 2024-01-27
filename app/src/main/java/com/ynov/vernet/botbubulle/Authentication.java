@@ -28,7 +28,7 @@ public class Authentication {
         this.firebaseFirestore = firebaseFirestore;
     }
 
-    void storeNotificationToken() {
+    public void storeNotificationToken() {
         FirebaseMessaging.getInstance().getToken()
                 .addOnCompleteListener(task -> {
                     if (!task.isSuccessful()) {
