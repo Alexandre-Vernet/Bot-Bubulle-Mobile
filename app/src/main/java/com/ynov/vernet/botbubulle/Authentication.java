@@ -52,8 +52,4 @@ public class Authentication {
                     }
                 });
     }
-
-    void signOut() {
-        firebaseAuth.signOut();
-    }
 }
