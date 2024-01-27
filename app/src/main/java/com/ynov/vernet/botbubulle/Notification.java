@@ -17,7 +17,7 @@ public class Notification {
     public void sendNotification(Context context) {
         // Prepare onclick notification redirection
         Intent intent = new Intent(context, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 100, intent, PendingIntent.FLAG_IMMUTABLE);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 1, intent, PendingIntent.FLAG_IMMUTABLE);
 
         // Button "send sms"
         Intent iSMS = new Intent(context, SMS.class);
@@ -28,7 +28,8 @@ public class Notification {
 
         // Display notification
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, canal)
-                .setContentText(generateRandomMessage())
+                .setContentTitle(generateRandomMessage())
+                .setContentText("Il est l\'heure de prendre tes médicaments ! 🥳")
                 .setContentIntent(pendingIntent)
                 .setSmallIcon(R.drawable.icon)
                 .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.icon))
@@ -49,6 +50,6 @@ public class Notification {
         builder.setChannelId(channelId);
 
         // Display notification
-        notificationManager.notify(100, builder.build());
+        notificationManager.notify(1, builder.build());
     }
 }
