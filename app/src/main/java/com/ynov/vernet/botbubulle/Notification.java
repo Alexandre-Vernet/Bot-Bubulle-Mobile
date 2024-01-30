@@ -1,7 +1,5 @@
 package com.ynov.vernet.botbubulle;
 
-import static com.ynov.vernet.botbubulle.SMS.generateRandomMessage;
-
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -28,8 +26,8 @@ public class Notification {
 
         // Display notification
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, canal)
-                .setContentTitle(generateRandomMessage())
-                .setContentText("Il est l\'heure de prendre tes médicaments ! 🥳")
+                .setContentTitle(context.getString(R.string.notification_title))
+                .setContentText(context.getString(R.string.notification_body))
                 .setContentIntent(pendingIntent)
                 .setSmallIcon(R.drawable.icon)
                 .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.icon))

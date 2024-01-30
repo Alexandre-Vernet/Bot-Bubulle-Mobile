@@ -9,4 +9,6 @@
     <string name="prompt_password">Mot de passe</string>
     <string name="action_sign_in">Connexion ou inscrption</string>
     <string name="action_sign_in_short">Connexion</string>
+    <string name="notification_title">Dring Dring 🕰️💊 !</string>
+    <string name="notification_body">Il est l\'heure de prendre tes médicaments ! 🥳</string>
 </resources>
