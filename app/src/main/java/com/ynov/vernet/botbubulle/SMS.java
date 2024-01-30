@@ -12,6 +12,7 @@ import android.telephony.SmsManager;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import android.app.NotificationManager;
 
 public class SMS extends BroadcastReceiver {
 
@@ -20,6 +21,10 @@ public class SMS extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         try {
+            // Dismiss last notification
+            NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.cancel(1);
+
             // Send SMS
             SmsManager sms = SmsManager.getDefault();
             ArrayList<String> parts = sms.divideMessage("Dring Dring 🕰️💊 !");
