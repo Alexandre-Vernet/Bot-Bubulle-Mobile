@@ -11,4 +11,5 @@
     <string name="action_sign_in_short">Connexion</string>
     <string name="notification_title">Dring Dring 🕰️💊 !</string>
     <string name="notification_body">Il est l\'heure de prendre tes médicaments ! 🥳</string>
+    <string name="hours_and_minutes_must_be_between_0_and_23_for_hours_and_0_and_59_for_minutes">Les heures et les minutes doivent être comprises entre 0 et 23 pour les heures et 0 et 59 pour les minutes</string>
 </resources>
