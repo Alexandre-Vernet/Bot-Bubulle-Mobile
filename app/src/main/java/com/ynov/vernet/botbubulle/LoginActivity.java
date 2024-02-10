@@ -11,16 +11,13 @@ import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.ynov.vernet.botbubulle.callback.SignInCallback;
 import com.ynov.vernet.botbubulle.databinding.ActivityLoginBinding;
+import com.ynov.vernet.botbubulle.firebase.Authentication;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private ActivityLoginBinding binding;
 
-    private FirebaseAuth firebaseAuth;
-    private FirebaseFirestore firebaseFirestore;
     private EditText emailEditText;
     private ProgressBar loadingProgressBar;
 
@@ -28,10 +25,7 @@ public class LoginActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        firebaseAuth = FirebaseAuth.getInstance();
-        firebaseFirestore = FirebaseFirestore.getInstance();
-
-        binding = ActivityLoginBinding.inflate(getLayoutInflater());
+        ActivityLoginBinding binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         emailEditText = binding.email;
@@ -63,28 +57,27 @@ public class LoginActivity extends AppCompatActivity {
                 passwordEditText.getText().toString()));
     }
 
-    private void signIn(String email, String password) {
+    public void signIn(String email, String password) {
         showProgressBar(true);
 
-        firebaseAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, task -> {
-                    if (task.isSuccessful()) {
-                        // Store notification token
-                        Authentication authentication = new Authentication(getApplicationContext(), firebaseAuth, firebaseFirestore);
-                        authentication.storeNotificationToken();
+        Authentication authentication = new Authentication(this);
+        authentication.signIn(email, password, new SignInCallback() {
+            @Override
+            public void onSignInSuccess() {
+                // Start activity
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
 
-                        // Start activity
-                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                        startActivity(intent);
-                        finish();
-                    }
-                })
-                .addOnFailureListener(this, e -> {
-                    emailEditText.setError(e.getMessage());
+            @Override
+            public void onSignInFailure(String errorMessage) {
+                emailEditText.setError(errorMessage);
 
-                    // Hide progress bar
-                    showProgressBar(false);
-                });
+                // Hide progress bar
+                showProgressBar(false);
+            }
+        });
     }
 
     private boolean isFormLoginValid(String email, String password) {
