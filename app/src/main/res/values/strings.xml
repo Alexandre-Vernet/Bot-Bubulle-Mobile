@@ -14,4 +14,5 @@
     <string name="notification_title">Dring Dring 🕰️💊 !</string>
     <string name="notification_body">It\'s time to take your medicine ! 🥳</string>
     <string name="hours_and_minutes_must_be_between_0_and_23_for_hours_and_0_and_59_for_minutes">Hours and minutes must be between 0 and 23 for hours and 0 and 59 for minutes</string>
+    <string name="default_web_client_id">117402885481820934979</string>
 </resources>

@@ -3,15 +3,16 @@ package com.ynov.vernet.botbubulle.firebase;
 import static com.ynov.vernet.botbubulle.firebase.Messaging.getFirebaseMessaging;
 
 import android.content.Context;
-import android.util.Log;
+import android.content.Intent;
 import android.widget.Toast;
-
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.SetOptions;
 import com.ynov.vernet.botbubulle.R;
 import com.ynov.vernet.botbubulle.callback.SignInCallback;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -95,5 +96,16 @@ public class Authentication {
                     }
                 })
                 .addOnFailureListener(e -> signInCallback.onSignInFailure(e.getMessage()));
+    }
+
+    public Intent signInWithGoogle() {
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(context.getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+
+        GoogleSignInClient googleSignInClient = GoogleSignIn.getClient(context, gso);
+
+        return googleSignInClient.getSignInIntent();
     }
 }
