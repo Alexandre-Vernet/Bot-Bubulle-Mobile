@@ -3,6 +3,7 @@ package com.ynov.vernet.botbubulle.firebase;
 import static com.ynov.vernet.botbubulle.firebase.Messaging.getFirebaseMessaging;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -13,6 +14,7 @@ import com.ynov.vernet.botbubulle.callback.SignInCallback;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Authentication {
 
@@ -64,6 +66,26 @@ public class Authentication {
 
     public void signIn(String email, String password, SignInCallback signInCallback) {
         getFirebaseAuth().signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        // Store notification token
+                        storeNotificationToken();
+
+                        signInCallback.onSignInSuccess();
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    // If the supplied auth credential is incorrect, malformed or has expired, try to sign up
+                    if (Objects.equals(e.getMessage(), "The supplied auth credential is incorrect, malformed or has expired.")) {
+                        signUp(email, password, signInCallback);
+                    } else {
+                        signInCallback.onSignInFailure(e.getMessage());
+                    }
+                });
+    }
+
+    public void signUp(String email, String password, SignInCallback signInCallback) {
+        getFirebaseAuth().createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         // Store notification token
