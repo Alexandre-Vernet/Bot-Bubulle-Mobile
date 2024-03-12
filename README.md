@@ -32,9 +32,7 @@ When the user receives the notification, he can click the "Send Message" button 
 ![notification](https://github.com/Alexandre-Vernet/Bot-Bubulle-Mobile/assets/72151831/9a5c1cf7-bc66-4f91-b834-00a9a9c94aa3)
 
 
-
-## Persist data
-When the notification time is changed, the time is stored in memory, allowing the phone to reset the notification time upon restarting by reading this data. This data is also used to set the clock hands (activity_main) to the time of the next notification.
-
 ## Problem
 If you don't receive the notification, check the rights in the app setting and uncheck the setting "suspend activity if app is unused"
+
+If the problem persist, lock the app in multi-task
